@@ -39,8 +39,16 @@ CALL,FILE="lattice.d";
 //CALL,FILE="rematch7_2l.cmd";
 
 //CALL,FILE="rematch_quate.cmd";
-
+savebeta,label=betafl,place=FL2TR003;
 CALL,FILE="twiss_e_ae.cmd";
+system, "rm -f beta0.txt beam0.txt";
+assign, echo="beta0.txt";
+show, betafl;
+assign, echo="beam0.txt";
+show, beam;
+assign, echo=terminal;
+system, "root -q -l -x GenerateInrays.C";
+
 plot, colour=100,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy;
 plot, colour=100,haxis=s,hmin=0,hmax=40,vaxis1=betx,bety,vaxis2=dx,dy;
 plot, colour=100,haxis=s,hmin=40,hmax=80,vaxis1=betx,bety,vaxis2=dx,dy;
