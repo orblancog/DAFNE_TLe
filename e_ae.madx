@@ -1,0 +1,80 @@
+TITLE, "TLe";
+
+En = .51;
+emitx:=2.8e-7;
+emity:=1.4e-7;
+delp:=1.e-3;
+SE := 0.1E-2;
+
+// =====
+// EAE SETUP
+// =====
+emitx_ae = 2.8e-7;
+emity_ae = 1.4e-7;
+delp_ae  = 1.e-3;
+
+BEAM, PARTICLE = electron, energy = En,sige=se,sigt = 1.,
+    ex=emitx, ey=emity;
+show, beam;
+value, beam->pc,beam->energy;
+value, beam->pc/beam->energy;
+option, echo, warn;
+
+!call,file= "TLe_20160628_tle.cur";
+!call, file="eTLe_20160628_1424_tle.cur.mad.madx";
+call, file="junk.madx";
+call, file="eTLe_20160923_1444_trasporto.cur.mad.madx";
+
+CALL,FILE="loc_e_ae.par";
+
+CALL,FILE="markers_tl.d";
+CALL,FILE="drift_tl.d";
+CALL,FILE="correct_tl.d";
+CALL,FILE="quad_tl.d";
+CALL,FILE="bend_e_Ae.d";
+
+CALL,FILE="lattice.d";
+!stop;
+
+//CALL,FILE="rematch7_2l.cmd";
+
+//CALL,FILE="rematch_quate.cmd";
+
+CALL,FILE="twiss_e_ae.cmd";
+plot, colour=100,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy;
+plot, colour=100,haxis=s,hmin=0,hmax=40,vaxis1=betx,bety,vaxis2=dx,dy;
+plot, colour=100,haxis=s,hmin=40,hmax=80,vaxis1=betx,bety,vaxis2=dx,dy;
+system, "ps2pdf madx.ps";
+system, "rm -r madx.ps";
+survey,file="survey";
+value,CHVTE003->hkick,CHVTE003->vkick;
+value,CHVTE003->vkick;
+value,CHVTE004->hkick;
+value,CHVTE006->vkick;
+
+! make plots of beam profile
+value, beam->ex;
+value, table(twiss,FL2TR001,betx);
+value, table(twiss,FL2TR001,alfx);
+value, beam->ey;
+value, table(twiss,FL2TR001,bety);
+value, table(twiss,FL2TR001,alfy);
+
+
+
+stop;
+
+ emitx:=2.8e-7;
+ emity:=1.4e-7;
+ delp:=1.e-3;
+ SE := 0.1E-2;
+
+
+
+ use, period = e_AE;
+  select, flag=twiss, clear;
+  select, flag=twiss,column=name,s,betx,bety,k1l,dx;
+!  select, flag=twiss,full;
+ TWISS ,chrom,sequence=e_AE,BETX=3.07,BETY=4.041,ALFX=1.017,ALFY=0.458,
+         file=e_AE.txt,save;
+ return;

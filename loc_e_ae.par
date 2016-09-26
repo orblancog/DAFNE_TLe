@@ -1,0 +1,18 @@
+! ****************************************************
+! Transfer line for ELECTRONS
+! March 2003
+!
+ en = 0.51;
+ dpp = 1.;
+ br0 = 1.701176886;
+ bro := br0*dpp;
+ eps = 0.;
+
+!************* e-  ACCUM. EXTRACTION  **********************************
+! quadrupoles sign for e- accum. extr. to dafne
+pertr = -1;
+pertt12 = 1;
+pertt3 = -1;
+perte = -1;
+
+RETURN;
