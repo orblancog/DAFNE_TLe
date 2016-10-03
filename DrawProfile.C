@@ -14,7 +14,7 @@
 
 using namespace std;
 
-int DrawProfile (char * k) {
+int DrawProfile (const char * k) {
   cout << "  Using flag : "<< k << endl;
   //Beam geometrical emittances
   double_t ex = 1;
@@ -183,6 +183,8 @@ int DrawProfile (char * k) {
   el2->Draw();
   el1->Draw();
   c1->RedrawAxis();
+  TString * myflname = new TString(k);
+  c1->SaveAs(myflname->Append(".pdf"));
 
 
   return 0;

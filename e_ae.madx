@@ -20,6 +20,8 @@ value, beam->pc,beam->energy;
 value, beam->pc/beam->energy;
 option, echo, warn;
 
+
+
 !call,file= "TLe_20160628_tle.cur";
 !call, file="eTLe_20160628_1424_tle.cur.mad.madx";
 call, file="junk.madx";
@@ -39,15 +41,74 @@ CALL,FILE="lattice.d";
 //CALL,FILE="rematch7_2l.cmd";
 
 //CALL,FILE="rematch_quate.cmd";
-savebeta,label=betafl,place=FL2TR003;
+savebeta,label=betaFL2TR001,place=FL2TR001;
+savebeta,label=betaFL2TR002,place=FL2TR002;
+savebeta,label=betaFL2TT001,place=FL2TT001;
+savebeta,label=betaFL2TT002,place=FL2TT002;
+savebeta,label=betaFL1TT001,place=FL1TT001;
+savebeta,label=betaFL1TT002,place=FL1TT002;
+savebeta,label=betaFL1TT003,place=FL1TT003;
+savebeta,label=betaFL1TE001,place=FL1TE001;
+savebeta,label=betaFL1TE002,place=FL1TE002;
+savebeta,label=betaFL1TE003,place=FL1TE003;
+savebeta,label=betaFL1EL101,place=FL1EL101;
 CALL,FILE="twiss_e_ae.cmd";
-system, "rm -f beta0.txt beam0.txt";
+
+! ! Tracking particles 
+! system, "rm -f beta0.txt beam0.txt";
+! assign, echo="beam0.txt";
+! show, beam;
+! assign, echo="beta0.txt";
+! show, betafl2TR001;
+! assign, echo="beta0.txt";
+! show, betafl2TR001;
+! assign, echo=terminal;
+! !system, "root -q -l -x GenerateInrays.C";
+
+
+! make plots of beam profile
+! value, beam->ex;
+! value, table(twiss,FL2TR001,betx);
+! value, table(twiss,FL2TR001,alfx);
+! value, beam->ey;
+! value, table(twiss,FL2TR001,bety);
+! value, table(twiss,FL2TR001,alfy);
 assign, echo="beta0.txt";
-show, betafl;
-assign, echo="beam0.txt";
-show, beam;
-assign, echo=terminal;
-system, "root -q -l -x GenerateInrays.C";
+show, betaFL2TR001;
+system, 'root -x -l "DrawProfile.C(\"FL2TR001\")" ';
+assign, echo="beta0.txt";
+show, betaFL2TR002;
+system, 'root -x -l "DrawProfile.C(\"FL2TR002\")" ';
+assign, echo="beta0.txt";
+show, betaFL2TT001;
+system, 'root -x -l "DrawProfile.C(\"FL2TT001\")" ';
+assign, echo="beta0.txt";
+show, betaFL2TT002;
+system, 'root -x -l "DrawProfile.C(\"FL2TT002\")" ';
+assign, echo="beta0.txt";
+show, betaFL1TT001;
+system, 'root -x -l "DrawProfile.C(\"FL1TT001\")" ';
+assign, echo="beta0.txt";
+show, betaFL1TT002;
+system, 'root -x -l "DrawProfile.C(\"FL1TT002\")" ';
+assign, echo="beta0.txt";
+show, betaFL1TT003;
+system, 'root -x -l "DrawProfile.C(\"FL1TT003\")" ';
+assign, echo="beta0.txt";
+show, betaFL1TE001;
+system, 'root -x -l "DrawProfile.C(\"FL1TE001\")" ';
+assign, echo="beta0.txt";
+show, betaFL1TE002;
+system, 'root -x -l "DrawProfile.C(\"FL1TE002\")" ';
+assign, echo="beta0.txt";
+show, betaFL1TE003;
+system, 'root -x -l "DrawProfile.C(\"FL1TE003\")" ';
+assign, echo="beta0.txt";
+show, betaFL1EL101;
+system, 'root -x -l "DrawProfile.C(\"FL1EL101\")" ';
+stop;
+
+
 
 plot, colour=100,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy;
 plot, colour=100,haxis=s,hmin=0,hmax=40,vaxis1=betx,bety,vaxis2=dx,dy;
@@ -60,14 +121,7 @@ value,CHVTE003->vkick;
 value,CHVTE004->hkick;
 value,CHVTE006->vkick;
 
-! make plots of beam profile
-value, beam->ex;
-value, table(twiss,FL2TR001,betx);
-value, table(twiss,FL2TR001,alfx);
-value, beam->ey;
-value, table(twiss,FL2TR001,bety);
-value, table(twiss,FL2TR001,alfy);
-system, 'root -x -l "DrawProfile.C(\"FL2TR001\")" ';
+
 
 
 stop;
