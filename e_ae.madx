@@ -67,7 +67,7 @@ value, table(twiss,FL2TR001,alfx);
 value, beam->ey;
 value, table(twiss,FL2TR001,bety);
 value, table(twiss,FL2TR001,alfy);
-
+system, 'root -x -l "DrawProfile.C(\"FL2TR001\")" ';
 
 
 stop;
