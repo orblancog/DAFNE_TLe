@@ -24,11 +24,10 @@ option, echo, warn;
 
 !call,file= "TLe_20160628_tle.cur";
 !call, file="eTLe_20160628_1424_tle.cur.mad.madx";
-call, file="junk.madx";
+!call, file="junk.madx";
 call, file="eTLe_20160923_1444_trasporto.cur.mad.madx";
 
 CALL,FILE="loc_e_ae.par";
-
 CALL,FILE="markers_tl.d";
 CALL,FILE="drift_tl.d";
 CALL,FILE="correct_tl.d";
@@ -73,39 +72,58 @@ CALL,FILE="twiss_e_ae.cmd";
 ! value, beam->ey;
 ! value, table(twiss,FL2TR001,bety);
 ! value, table(twiss,FL2TR001,alfy);
-assign, echo="beta0.txt";
+
+assign, echo="beam0.txt";
+show, beam;
+system, "rm -f betaFL2TR001.txt";
+assign, echo="betaFL2TR001.txt";
 show, betaFL2TR001;
-system, 'root -x -l "DrawProfile.C(\"FL2TR001\")" ';
-assign, echo="beta0.txt";
+system, "rm -f betaFL2TR002.txt";
+assign, echo="betaFL2TR002.txt";
 show, betaFL2TR002;
-system, 'root -x -l "DrawProfile.C(\"FL2TR002\")" ';
-assign, echo="beta0.txt";
+system, "rm -f betaFL2TT001.txt";
+assign, echo="betaFL2TT001.txt";
 show, betaFL2TT001;
-system, 'root -x -l "DrawProfile.C(\"FL2TT001\")" ';
-assign, echo="beta0.txt";
+system, "rm -f betaFL2TT002.txt";
+assign, echo="betaFL2TT002.txt";
 show, betaFL2TT002;
-system, 'root -x -l "DrawProfile.C(\"FL2TT002\")" ';
-assign, echo="beta0.txt";
+system, "rm -f betaFL1TT001.txt";
+assign, echo="betaFL1TT001.txt";
 show, betaFL1TT001;
-system, 'root -x -l "DrawProfile.C(\"FL1TT001\")" ';
-assign, echo="beta0.txt";
+system, "rm -f betaFL1TT002.txt";
+assign, echo="betaFL1TT002.txt";
 show, betaFL1TT002;
-system, 'root -x -l "DrawProfile.C(\"FL1TT002\")" ';
-assign, echo="beta0.txt";
+system, "rm -f betaFL1TT003.txt";
+assign, echo="betaFL1TT003.txt";
 show, betaFL1TT003;
-system, 'root -x -l "DrawProfile.C(\"FL1TT003\")" ';
-assign, echo="beta0.txt";
+system, "rm -f betaFL1TE001.txt";
+assign, echo="betaFL1TE001.txt";
 show, betaFL1TE001;
-system, 'root -x -l "DrawProfile.C(\"FL1TE001\")" ';
-assign, echo="beta0.txt";
+system, "rm -f betaFL1TE002.txt";
+assign, echo="betaFL1TE002.txt";
 show, betaFL1TE002;
-system, 'root -x -l "DrawProfile.C(\"FL1TE002\")" ';
-assign, echo="beta0.txt";
+system, "rm -f betaFL1TE003.txt";
+assign, echo="betaFL1TE003.txt";
 show, betaFL1TE003;
-system, 'root -x -l "DrawProfile.C(\"FL1TE003\")" ';
-assign, echo="beta0.txt";
+system, "rm -f betaFL1EL101.txt";
+assign, echo="betaFL1EL101.txt";
 show, betaFL1EL101;
+assign, echo=terminal;
+
+
+system, 'root -x -l "DrawProfile.C(\"FL2TR001\")" ';
+system, 'root -x -l "DrawProfile.C(\"FL2TR002\")" ';
+system, 'root -x -l "DrawProfile.C(\"FL2TT001\")" ';
+system, 'root -x -l "DrawProfile.C(\"FL2TT002\")" ';
+system, 'root -x -l "DrawProfile.C(\"FL1TT001\")" ';
+system, 'root -x -l "DrawProfile.C(\"FL1TT002\")" ';
+system, 'root -x -l "DrawProfile.C(\"FL1TT003\")" ';
+system, 'root -x -l "DrawProfile.C(\"FL1TE001\")" ';
+system, 'root -x -l "DrawProfile.C(\"FL1TE002\")" ';
+system, 'root -x -l "DrawProfile.C(\"FL1TE003\")" ';
 system, 'root -x -l "DrawProfile.C(\"FL1EL101\")" ';
+
+
 stop;
 
 

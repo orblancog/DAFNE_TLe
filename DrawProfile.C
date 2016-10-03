@@ -16,6 +16,7 @@ using namespace std;
 
 int DrawProfile (const char * k) {
   cout << "  Using flag : "<< k << endl;
+  TString * myflname = new TString(k);
   //Beam geometrical emittances
   double_t ex = 1;
   double_t ey = 1;
@@ -58,14 +59,17 @@ int DrawProfile (const char * k) {
   char madx04[20];
 
   // Read twiss info
-  beta0in.open("beta0.txt");
+  TString * betafl = new TString("beta");
+  betafl->Append(k);
+  betafl->Append(".txt");
+  beta0in.open(betafl->Data());
   if (beta0in == 0) {
     // if we cannot open the file, 
     // print an error message and return immediatly
-    printf("Error: cannot open beta0.txt!\n");
+    printf("Error: cannot open betaXXXX.txt!\n");
     return 1;
   }
-  cout << "  ... reading file beta0.txt (twiss params at input)"<<endl;
+  cout << "  ... reading file "<<betafl->Data()<<" (twiss params at input)"<<endl;
   beta0in >>  madx00 >> madx01 >> madx02 >> madx03;
   while(!beta0in.eof()){
     beta0in >> madx00 >> madx01 >> madx02 >> madx03 >> madx04;
@@ -75,10 +79,12 @@ int DrawProfile (const char * k) {
     if (!strcmp(madx01,"bety")) {cout<<"    "<<madx01<<" "<<madx04<<endl;betay=atof(madx04);}
     if (!strcmp(madx01,"alfy")) {cout<<"    "<<madx01<<" "<<madx04<<endl;alfay=atof(madx04);}
     if (!strcmp(madx01,"dx")) {cout<<"    "<<madx01<<" "<<madx04<<endl;etax=atof(madx04);}
-    if (!strcmp(madx01,"dpx")) {cout<<"    "<<madx01<<" "<<madx04<<endl;etapx=atof(madx04);}
+    //    if (!strcmp(madx01,"dpx")) {cout<<"    "<<madx01<<" "<<madx04<<endl;etapx=atof(madx04);}
+    if (!strcmp(madx01,"dy")) {cout<<"    "<<madx01<<" "<<madx04<<endl;etay=atof(madx04);}
+    //if (!strcmp(madx01,"dpy")) {cout<<"    "<<madx01<<" "<<madx04<<endl;etapy=atof(madx04);}
   }
   cout << "    ... all others ignored.";
-  cout << "  beta0.txt read."<<endl;
+  cout << "  "<<betafl->Data()<<" read."<<endl;
   beam0in.close();
   cout << "  Calculating gamma[xy]..."<<endl;
   gammax = (1 + alfax*alfax )/betax;
@@ -124,9 +130,9 @@ int DrawProfile (const char * k) {
   beam0in.close();
 
   // Calculate sigma0
-  sigmax0  = TMath::Sqrt(ex*betax);
+  sigmax0  = TMath::Sqrt(ex*betax + etax*etax*Energyspread*Energyspread);
   sigmapx0 = TMath::Sqrt(ex/betax);
-  sigmay0  = TMath::Sqrt(ey*betay);
+  sigmay0  = TMath::Sqrt(ey*betay + etay*etay*Energyspread*Energyspread);
   sigmapy0 = TMath::Sqrt(ey/betay);
   sigmas0  = TMath::Sqrt(et*0);
   offsetx0 = etax*Energyspread;
@@ -183,9 +189,8 @@ int DrawProfile (const char * k) {
   el2->Draw();
   el1->Draw();
   c1->RedrawAxis();
-  TString * myflname = new TString(k);
+  //  gPad->WaitPrimitive();
   c1->SaveAs(myflname->Append(".pdf"));
-
 
   return 0;
 }
