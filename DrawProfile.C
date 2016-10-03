@@ -145,7 +145,7 @@ int DrawProfile (const char * k) {
   TCanvas * c1 = new TCanvas("c1", "c1", w, h);
   c1->SetWindowSize(w + (w - c1->GetWw()), h + (h - c1->GetWh()));
   //  TCanvas *c1 = new TCanvas("c1");
-  c1->Range(-20e-3*scalehv,-20e-3*scalehv,20e-3*scalehv,20e-3*scalehv);
+  c1->Range(-40e-3*scalehv,-40e-3*scalehv,40e-3*scalehv,40e-3*scalehv);
   c1->SetFillColor(42);
   c1->SetGrid();
   //  c1->SetGrid(5,5);
@@ -159,9 +159,9 @@ int DrawProfile (const char * k) {
   TGraph *gr = new TGraph(1,x0,y0);
   gr->Draw("AC*");
   gr->SetTitle(k);//input parameter
-  gr->GetXaxis()->SetLimits(-20e-3*scalehv,20e-3*scalehv);
-  gr->SetMinimum(-20e-3*scalehv);
-  gr->SetMaximum(20e-3*scalehv);
+  gr->GetXaxis()->SetLimits(-40e-3*scalehv,40e-3*scalehv);
+  gr->SetMinimum(-40e-3*scalehv);
+  gr->SetMaximum(40e-3*scalehv);
   gr->GetXaxis()->CenterTitle();
   gr->GetYaxis()->CenterTitle();
   gr->GetXaxis()->SetNdivisions(10);
@@ -171,7 +171,7 @@ int DrawProfile (const char * k) {
   c1->Update();
 
 
-  TEllipse *bpipe=new TEllipse(0,0,20e-3*scalehv,20e-3*scalehv);
+  TEllipse *bpipe=new TEllipse(0,0,40e-3*scalehv,40e-3*scalehv);
   bpipe->SetFillColorAlpha(kWhite,0.0);
   bpipe->SetFillStyle(4000);
   bpipe->SetLineWidth(5);
