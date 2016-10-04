@@ -3,7 +3,7 @@ option, -echo, warn;
 
 ! Creating the beam
 call, file="beamparams.madx";
-beam, particle=electron,energy=en,radiate=true,ex=emitx,ey=emity,
+beam, particle=electron,energy=en,radiate=false,ex=emitx,ey=emity,
       sigt=bunchl,sige=esprd,et=bunchl*esprd,
       bunched=true,kbunch=100,bcurrent=0.01;
 
@@ -18,7 +18,7 @@ CALL,FILE="correct_tl.d";
 CALL,FILE="quad_tl.d";
 CALL,FILE="bend_e_Ae.d";
 CALL,FILE="lattice.d";
-
+use, sequence= e_ae;
 //CALL,FILE="rematch7_2l.cmd";
 //CALL,FILE="rematch_quate.cmd";
 ! savebeta in flags
@@ -36,7 +36,35 @@ call, file="showbeta.madx";
 system, "root -l -x -q "GenerateInrays.C(\"FL2TR001\",1000)"";
 
 
+! NO purpose tracking in MAD-X
+! !stop;
+
+! !makethin lenses
+! !select,flag=makethin,class=sbend,thick=false;!no sbends...OK
+! select,flag=makethin,class=rbend,thick=false,slice=2;
+! select,flag=makethin,class=sbend,thick=false,slice=2;
+! select,flag=makethin,class=quadrupole,thick=false,slice=2;
+! select,flag=makethin,class=sextupole,thick=false,slice=2;
+! makethin, sequence=e_ae,style=teapot,makedipedge;
+! save, sequence=e_ae,file="thin.e_ae.seq";
+! call, file="thin.e_ae.seq";
+
+! use, sequence=e_ae;
+! !set parameters
+track, onepass=true,aperture=true,onetable,recloss,dump;
+call, file="observe.madx";!observe;!set obeservation points
+!set particles
+start, X=1e-3, PX=1e-3, Y=1e-3, PY=1e-3, T=1e-9, PT=1e-9;
+start, X=1e-9, PX=1e-9, Y=1e-9, PY=1e-9, T=1e-9, PT=1e-9;
+call,file="madxInrays.madx";
+run,turns=1,maxaper={0.1,0.01,0.1,0.01,1.0,0.1};!run track
+!dynap;
+endtrack;
+write, table=trackloss, file="trackloss";!write lost particles
+!end of NO purpose tracking in MAD-X
 stop;
+
+
 
 ! PTC map
 ! !###PTC  To produce fort.18
@@ -57,6 +85,23 @@ value,CHVTE003->hkick,CHVTE003->vkick;
 value,CHVTE003->vkick;
 value,CHVTE004->hkick;
 value,CHVTE006->vkick;
+
+
+
+! !! touschek
+! touschek, file="outputs/myMRe.tou", tolerance=1e-7;
+
+! !! ptc_twiss
+! !###PTC  To produce fort.18
+! ptc_create_universe;
+! ptc_create_layout,model=2,method=6,nst=10;
+! !ptc_normal,icase=5,no=8,deltap=0.00;
+! select, flag=ptc_twiss,clear;
+! select, flag=ptc_twiss,column=name,keyword,s,beta11, beta22, alfa11, alfa22;
+! ptc_twiss,icase=5,closed_orbit,file="myDAFNE.ptctwiss",summary_file,table;
+! ptc_end;
+! !! END ptc
+
 
 
 

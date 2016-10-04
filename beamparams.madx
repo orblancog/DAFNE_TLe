@@ -3,7 +3,7 @@ En    := 0.51;![GeV]
 emitx := 2.8e-7;![m]
 emity := 1.4e-7;![m]
 esprd := 0.1e-2;![1]
-bunchl:= 1.357e-2; ! = clight/(120*368.667MHz)
+bunchl:= 1.357e-2;![m] = clight/(120*368.667MHz)
 
 ! EAE SETUP
 emitx_ae = emitx;!2.8e-7;![m]
