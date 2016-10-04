@@ -20,11 +20,10 @@ CALL,FILE="lattice.d";
 
 //CALL,FILE="rematch7_2l.cmd";
 //CALL,FILE="rematch_quate.cmd";
-! Twiss 
-CALL,FILE="twiss_e_ae.cmd";
-stop;
 ! savebeta in flags
 call, file="savebeta.madx";
+! Twiss 
+CALL,FILE="twiss_e_ae.cmd";
 ! make plots of beam profile
 call, file="showbeta.madx";
 call, file="plotprofile.madx";
