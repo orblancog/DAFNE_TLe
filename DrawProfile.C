@@ -1,5 +1,6 @@
 // oblancog. 2016.09.xx Drawing beam profiles
-// this code generates the initial coordinates of the particles
+// this code was used to generate the initial coordinates of the particles
+// now it plots beam profiles
 
 // For the particle generation
 #include "TRandom2.h"//period=10**26, fast, 32 bits for the state
@@ -14,7 +15,7 @@
 
 using namespace std;
 
-int DrawProfile (const char * k) {
+int DrawProfile (const char * k) {//k is the flag name 
   cout << "  Using flag : "<< k << endl;
   TString * myflname = new TString(k);
   //Beam geometrical emittances
@@ -40,6 +41,8 @@ int DrawProfile (const char * k) {
   double_t sigmapy0 = 0;
   double_t sigmas0 = 0;
   double_t sigmad0 = 0;
+  double_t offsetx0 = 0;
+  double_t offsety0 = 0;
 
   ofstream mydebug;
   ofstream mymadxtrac;
@@ -128,7 +131,7 @@ int DrawProfile (const char * k) {
   cout << "    ... all others ignored.";
   cout << "    beam0.txt read."<<endl;
   beam0in.close();
-
+  
   // Calculate sigma0
   sigmax0  = TMath::Sqrt(ex*betax + etax*etax*Energyspread*Energyspread);
   sigmapx0 = TMath::Sqrt(ex/betax);
