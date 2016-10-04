@@ -26,7 +26,11 @@ int GenerateInrays (const char * k, int N) {
   // Energy distribution 
   // 0=Uniform -EnergySpread/2 to EnergySpread/2
   // 1=Gaussian(0,sigma=EnergySpread)
-  int Edistr=0;
+  int Edistr=1;
+
+  // Limit of the gaussian
+  int gauslimit=3;
+
 
   //Relativistic factors
   double_t gammar = 1;
@@ -69,7 +73,6 @@ int GenerateInrays (const char * k, int N) {
   double_t xgausvalue;
   double_t ygausvalue;
   double_t tgausvalue;
-  int gauslimit=3 ;
 
   //Output values
   double_t ux=0;
@@ -190,25 +193,25 @@ int GenerateInrays (const char * k, int N) {
   sigmay0  = TMath::Sqrt(ey*betay);
   sigmapy0 = TMath::Sqrt(ey/betay);
   //  sigmas0  = TMath::Sqrt(et*0);//already assigned when reading beam0
-  sigmad0  = Energyspread;//TMath::Sqrt(et*0);
+  sigmad0  = 1.0/betar*Energyspread;//TMath::Sqrt(et*0);//\Delta E/(Pc) = 1/\beta_r * \Delta E/E
 
   while (i<N){
     //x
     xbeta = xrnd->Gaus(0,sigmax0);
     pxbeta = pxrnd->Gaus(0,sigmapx0);
-    xgausvalue = (gammax*xbeta*xbeta+2*alfax*xbeta*pxbeta+betax*pxbeta*pxbeta)/ex;
+    xgausvalue = (gammax*xbeta*xbeta+2*alfax*xbeta*pxbeta+betax*pxbeta*pxbeta)/(ex);
     //y
     ybeta = yrnd->Gaus(0,sigmay0);
     pybeta = pyrnd->Gaus(0,sigmapy0);
-    ygausvalue = (gammay*ybeta*ybeta+2*alfay*ybeta*pybeta+betay*pybeta*pybeta)/ey;
+    ygausvalue = (gammay*ybeta*ybeta+2*alfay*ybeta*pybeta+betay*pybeta*pybeta)/(ey);
     //d
     ups = bunchlrnd->Gaus(0,sigmas0);
     if (Edistr){
-      upd = Espreadrnd->Gaus(0,1.0/betar*Energyspread);//\Delta E/(Pc) = 1/\beta_r * \Delta E/E
-      tgausvalue = (upd*upd+ups*ups)/et;
+      upd = Espreadrnd->Gaus(0,sigmad0);
+      tgausvalue = upd*upd/(sigmad0*sigmad0)+ups*ups/(sigmas0*sigmas0);
     }else{
-      upd = Espreadrnd->Uniform(-0.5/betar*Energyspread,0.5/betar*Energyspread);//\Delta E/(Pc) = 1/\beta_r * \Delta E/E
-      tgausvalue = ups/sigmas0;
+      upd = Espreadrnd->Uniform(-0.5*sigmad0,0.5*sigmad0);//\Delta E/(Pc) = 1/\beta_r * \Delta E/E
+      tgausvalue = ups*ups/(sigmas0*sigmas0);
     }
       
     if (xgausvalue<gauslimit && ygausvalue<gauslimit && tgausvalue<gauslimit){
