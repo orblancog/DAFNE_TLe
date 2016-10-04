@@ -103,10 +103,10 @@ int GenerateInrays (const char * k, int N) {
   if (beta0in == 0) {
     // if we cannot open the file, 
     // print an error message and return immediatly
-    printf("Error: cannot open beta file!\n");
+   printf("Error: cannot open betaXXXX.txt!\n");
     return 1;
   }
-  cout << "  ... reading file beta0.txt (twiss params at input)"<<endl;
+  cout << "  ... reading file "<<betafl->Data()<<" (twiss params at input)"<<endl;
   beta0in >>  madx00 >> madx01 >> madx02 >> madx03;
   while(!beta0in.eof()){
     beta0in >> madx00 >> madx01 >> madx02 >> madx03 >> madx04;
