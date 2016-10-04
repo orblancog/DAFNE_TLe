@@ -2,7 +2,7 @@
 ! Transfer line for ELECTRONS
 ! March 2003
 !
- en = 0.51;
+! en = 0.51;
  dpp = 1.;
  br0 = 1.701176886;
  bro := br0*dpp;

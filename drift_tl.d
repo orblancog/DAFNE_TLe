@@ -139,7 +139,7 @@
 ! end TE
 
 
- DQ: DRIFT ,L=0.2;
+! DQ: DRIFT ,L=0.2; already defined
 
 ! DRIFT in the range LtoPM;
 

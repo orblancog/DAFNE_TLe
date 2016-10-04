@@ -1,131 +1,43 @@
 TITLE, "TLe";
+option, -echo, warn;
 
-En = .51;
-emitx:=2.8e-7;
-emity:=1.4e-7;
-delp:=1.e-3;
-SE := 0.1E-2;
-
-// =====
-// EAE SETUP
-// =====
-emitx_ae = 2.8e-7;
-emity_ae = 1.4e-7;
-delp_ae  = 1.e-3;
-
+! Creating the beam
+call, file="beamparams.madx";
 BEAM, PARTICLE = electron, energy = En,sige=se,sigt = 1.,
     ex=emitx, ey=emity;
-show, beam;
-value, beam->pc,beam->energy;
-value, beam->pc/beam->energy;
-option, echo, warn;
 
+! Elements strength is a function of the currents
+call, file="currents.madx";
 
-
-!call,file= "TLe_20160628_tle.cur";
-!call, file="eTLe_20160628_1424_tle.cur.mad.madx";
-!call, file="junk.madx";
-call, file="eTLe_20160923_1444_trasporto.cur.mad.madx";
-
+! Machine files
 CALL,FILE="loc_e_ae.par";
 CALL,FILE="markers_tl.d";
 CALL,FILE="drift_tl.d";
 CALL,FILE="correct_tl.d";
 CALL,FILE="quad_tl.d";
 CALL,FILE="bend_e_Ae.d";
-
 CALL,FILE="lattice.d";
-!stop;
 
 //CALL,FILE="rematch7_2l.cmd";
-
 //CALL,FILE="rematch_quate.cmd";
-savebeta,label=betaFL2TR001,place=FL2TR001;
-savebeta,label=betaFL2TR002,place=FL2TR002;
-savebeta,label=betaFL2TT001,place=FL2TT001;
-savebeta,label=betaFL2TT002,place=FL2TT002;
-savebeta,label=betaFL1TT001,place=FL1TT001;
-savebeta,label=betaFL1TT002,place=FL1TT002;
-savebeta,label=betaFL1TT003,place=FL1TT003;
-savebeta,label=betaFL1TE001,place=FL1TE001;
-savebeta,label=betaFL1TE002,place=FL1TE002;
-savebeta,label=betaFL1TE003,place=FL1TE003;
-savebeta,label=betaFL1EL101,place=FL1EL101;
+! Twiss 
 CALL,FILE="twiss_e_ae.cmd";
-
-! ! Tracking particles 
-! system, "rm -f beta0.txt beam0.txt";
-! assign, echo="beam0.txt";
-! show, beam;
-! assign, echo="beta0.txt";
-! show, betafl2TR001;
-! assign, echo="beta0.txt";
-! show, betafl2TR001;
-! assign, echo=terminal;
-! !system, "root -q -l -x GenerateInrays.C";
-
-
+stop;
+! savebeta in flags
+call, file="savebeta.madx";
 ! make plots of beam profile
-! value, beam->ex;
-! value, table(twiss,FL2TR001,betx);
-! value, table(twiss,FL2TR001,alfx);
-! value, beam->ey;
-! value, table(twiss,FL2TR001,bety);
-! value, table(twiss,FL2TR001,alfy);
-
-assign, echo="beam0.txt";
-show, beam;
-system, "rm -f betaFL2TR001.txt";
-assign, echo="betaFL2TR001.txt";
-show, betaFL2TR001;
-system, "rm -f betaFL2TR002.txt";
-assign, echo="betaFL2TR002.txt";
-show, betaFL2TR002;
-system, "rm -f betaFL2TT001.txt";
-assign, echo="betaFL2TT001.txt";
-show, betaFL2TT001;
-system, "rm -f betaFL2TT002.txt";
-assign, echo="betaFL2TT002.txt";
-show, betaFL2TT002;
-system, "rm -f betaFL1TT001.txt";
-assign, echo="betaFL1TT001.txt";
-show, betaFL1TT001;
-system, "rm -f betaFL1TT002.txt";
-assign, echo="betaFL1TT002.txt";
-show, betaFL1TT002;
-system, "rm -f betaFL1TT003.txt";
-assign, echo="betaFL1TT003.txt";
-show, betaFL1TT003;
-system, "rm -f betaFL1TE001.txt";
-assign, echo="betaFL1TE001.txt";
-show, betaFL1TE001;
-system, "rm -f betaFL1TE002.txt";
-assign, echo="betaFL1TE002.txt";
-show, betaFL1TE002;
-system, "rm -f betaFL1TE003.txt";
-assign, echo="betaFL1TE003.txt";
-show, betaFL1TE003;
-system, "rm -f betaFL1EL101.txt";
-assign, echo="betaFL1EL101.txt";
-show, betaFL1EL101;
-assign, echo=terminal;
-
-
-system, 'root -x -l "DrawProfile.C(\"FL2TR001\")" ';
-system, 'root -x -l "DrawProfile.C(\"FL2TR002\")" ';
-system, 'root -x -l "DrawProfile.C(\"FL2TT001\")" ';
-system, 'root -x -l "DrawProfile.C(\"FL2TT002\")" ';
-system, 'root -x -l "DrawProfile.C(\"FL1TT001\")" ';
-system, 'root -x -l "DrawProfile.C(\"FL1TT002\")" ';
-system, 'root -x -l "DrawProfile.C(\"FL1TT003\")" ';
-system, 'root -x -l "DrawProfile.C(\"FL1TE001\")" ';
-system, 'root -x -l "DrawProfile.C(\"FL1TE002\")" ';
-system, 'root -x -l "DrawProfile.C(\"FL1TE003\")" ';
-system, 'root -x -l "DrawProfile.C(\"FL1EL101\")" ';
-
+call, file="showbeta.madx";
+call, file="plotprofile.madx";
 
 stop;
 
+! PTC map
+! !###PTC  To produce fort.18
+! ptc_create_universe;
+! ptc_create_layout,model=2,method=6,nst=10;
+! ptc_normal,icase=5,no=8,deltap=0.00;
+! ptc_end;
+!!! End MAD-X Code
 
 
 plot, colour=100,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy;
@@ -143,6 +55,18 @@ value,CHVTE006->vkick;
 
 
 stop;
+
+! ! Tracking particles 
+! system, "rm -f beta0.txt beam0.txt";
+! assign, echo="beam0.txt";
+! show, beam;
+! assign, echo="beta0.txt";
+! show, betafl2TR001;
+! assign, echo="beta0.txt";
+! show, betafl2TR001;
+! assign, echo=terminal;
+! !system, "root -q -l -x GenerateInrays.C";
+
 
  emitx:=2.8e-7;
  emity:=1.4e-7;

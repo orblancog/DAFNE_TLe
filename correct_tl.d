@@ -62,21 +62,11 @@ CHVTR001: kicker,
 
 
 !EXTRACTION ACCUMULATOR -> DAFNE MRe-???
- CHVTT001: kicker,
-   	   hkick:= 1/en * ccvtall1*CHHTT001 + ccvtall2,
-	   vkick:= 1/en * ccvtall1*CVVTT001 + ccvtall2;
- CHVTT002: kicker,
-   	   hkick:= 1/en * ccvtall1*CHHTT002 + ccvtall2,
-	   vkick:= 1/en * ccvtall1*CVVTT002 + ccvtall2;
- CHVTT003: kicker,
-   	   hkick:= 1/en * ccvtall1*CHHTT003 + ccvtall2,
-	   vkick:= 1/en * ccvtall1*CVVTT003 + ccvtall2;
- CHVTT004: kicker,
-   	   hkick:= 1/en * ccvtall1*CHHTT004 + ccvtall2,
-	   vkick:= 1/en * ccvtall1*CVVTT004 + ccvtall2;
- CHVTT005: kicker,
-   	   hkick:= 1/en * ccvtall1*CHHTT005 + ccvtall2,
-	   vkick:= 1/en * ccvtall1*CVVTT005 + ccvtall2;
+! CHVTT001: kicker,
+! CHVTT002: kicker,
+! CHVTT003: kicker,
+! CHVTT004: kicker,
+! CHVTT005: kicker,
  CHVTT006: kicker,
    	   hkick:= 1/en * ccvtall1*CHHTT006 + ccvtall2,
 	   vkick:= 1/en * ccvtall1*CVVTT006 + ccvtall2;

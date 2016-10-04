@@ -1,0 +1,171 @@
+#! /usr/bin/env python
+
+### This script reads a .mad with mad syntax and writes a .madx with
+### madx syntax.
+### http://mad.web.cern.ch/mad/
+### If an element is not defined in madx syntax,then the scripts
+### throws a WARNING in the standard output.
+
+
+### Beta release
+### ++ USE
+### $ ./mad2madx madline
+### it creates a file "madline.madx"
+
+### ++ WARNINGS/BUGS
+### Multipoles were complicated to translate. I haven't seen any bug, but use carefully.
+### PROFILE elements do not exist in MAD-X, they are changed to MARKER elements.
+
+### ++TESTS
+### It has only been tested with Mark Woodley's Flight simulator MAD files
+### https://confluence.slac.stanford.edu/display/ATF/ATF2+Flight+Simulator
+### I took the .saveline MAD file from here (v5.2)
+### https://code.google.com/p/atf2flightsim/source/browse/#svn%2Ftrunk%
+### 2FATF2%2FFlightSim%2FlatticeFiles%2Fsrc%2Fv5.2
+### and I used this code to translate from MAD to MADX
+
+### This is the result 
+### /afs/cern.ch/work/o/oblancog/public/progs/MAD-X/2MAD-X/ATF2lat_BX10BY1nl.saveline.madx
+### There are 4 lines declared: ATFDR, EXT, FF, POST
+### I guess it is 10BX1BY1 from the name.
+
+
+
+### Author : Oscar BLANCO
+###          oscar.roberto.blanco.garcia@cern.ch
+
+
+import os
+import sys
+import re
+import string
+import textwrap
+from math import cos, sin, pi
+
+def multipoles(charact):
+    
+    normal = [0,0,0,0,0,0,0,0,0,0]
+    skew = [0,0,0,0,0,0,0,0,0,0]
+    
+    kl = [0,0,0,0,0,0,0,0,0,0]
+    t  = [0,0,0,0,0,0,0,0,0,0]
+
+    app = 0
+    aux1 = charact.strip(';')
+    #aux2 = string.join(aux1,'')
+    
+    ssline = string.split(aux1,',')
+    #print ssline
+    for i in range(1,len(ssline)):
+        if ssline[i] != '':
+            
+            part  = string.split(ssline[i],'=')
+            
+            if not("APERTURE" in part[0]):
+                n = re.sub('\D','',part[0])
+                w = re.sub('[^kKtT]','',part[0])
+                # print ssline[0], len(part), w, n, part , part[1]
+
+                if w.upper() == 'K':# magnitude
+                    kl[int(n)] = float(part[1])
+                if w.upper() == 'T':# angle
+                    if part[1] != '':
+                        t[int(n)]  = float(part[1])
+                    else:
+                        t[int(n)]  = float(pi/(2*int(n)+2))
+                    #print t[int(n)]*180/pi
+            else:
+                app = 1
+                auxapp = ssline[i]
+                
+    #Calculate components
+    for i in range(len(normal)):# normal and skew are the same length always
+	ffactor = i+1 # to get the proper rotation at the ith order
+        normal[i] = cos(t[i]*ffactor)*kl[i]
+        skew[i]   = sin(t[i]*ffactor)*kl[i]
+    #print normal
+    #print skew
+    #create line
+    
+    outl = ssline[0]+", LRAD=0, TILT=0, KNL:={"+','.join(map(str,normal))+"}"+\
+    ", KSL:={"+','.join(map(str,skew))+"};"
+    if app == 0:
+        outl = ssline[0]+", LRAD=0, TILT=0, KNL:={"+','.join(map(str,normal))+"}"+\
+        ", KSL:={"+','.join(map(str,skew))+"};"
+    if app == 1:
+        outl = ssline[0]+", LRAD=0, TILT=0, KNL:={"+','.join(map(str,normal))+"}"+\
+        ", KSL:={"+','.join(map(str,skew))+"}, "+auxapp+";"
+    return outl
+
+
+##########
+# Begining of the script
+
+# Open file from command line
+filename = sys.argv[1]
+# Read all file lines
+lines = []
+print "  Reading file:", filename
+fileh = open(filename,'r')
+for lin in fileh:
+    lines.append(lin)
+    #print lin
+fileh.close()
+
+# Create translated buffer (tline)
+tline = []
+auxslin = ''
+keeplines = 0
+# do initial syntax changes for the tline
+print "  ...initial syntax translation..."
+for lin in lines:
+    slin = lin.strip(None)
+    if len(slin) != 0:
+        if '!' in slin:
+            #sclin = slin + '\n'
+            tline.append(string.join(slin,''))
+        else:
+            if slin[-1] == '&':
+                sslin = slin.strip('&')
+                keeplines = 1
+                auxslin = auxslin + sslin
+            else:
+                keeplines = 0
+                auxslin = auxslin + slin
+            if keeplines == 0:
+                #print auxslin
+            #else:
+                auxslin = auxslin + ";"
+                #print len(auxslin)
+                tline.append(string.join(auxslin,''))
+                auxslin = ''
+                #keeplines = 0
+
+# check for non-standard elements and append to fline
+# only MULTIPOLE and PROFILE at the moment
+fline = []
+print "  ...Checking for non-standard elements..." 
+for line in tline:
+    if "MULTIPOLE" in line.upper():
+        madxline = multipoles(line)
+#        print madxline
+        fline.append(madxline)
+    elif "PROFILE" in line.upper():
+        print "    WARNING: profile element",line[:line.index("PROFILE")-2],"changed to marker",line[:line.index("PROFILE")-2]
+        fline.append(line.replace("PROFILE","MARKER"))
+         #print "aqui"
+    else:
+        fline.append(line)
+                
+# write fline to the output file
+fileo = open(filename+".madx",'w')
+for jline in fline:
+    #multipoles(jline)
+    #for 
+    #hline = jline.split(None)
+    #print len(hline)
+    print >> fileo, '\n'.join(textwrap.wrap(jline,80))
+fileo.close()
+print "  Output file:",filename+".madx","created."
+print "  ALL done. Adios !"
+# EOF

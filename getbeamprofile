@@ -1,0 +1,6 @@
+echo "Converting currents to currents.madx ..."
+cur2madx $1
+echo "...Currents converted."
+echo "Running model in madx and root to get the beam profile..."
+madx64 < e_ae.madx
+echo "All done. Adios"

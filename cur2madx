@@ -1,0 +1,3 @@
+cat $1 | \
+  awk -F ' ' '{if($4==1) print "! "$1" := "$2";"; else if ($3=="R") print $1" := "$2";! flag=R"; else if ($3=="-") print $1" := -"$2";"; else print $1" := "$2";";}'\
+  | sed 's/QUA/C/' | sed 's/*//g' > currents.madx
