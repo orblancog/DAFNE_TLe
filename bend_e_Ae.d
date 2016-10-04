@@ -58,6 +58,6 @@ VBP: SBEND,L=.35,TILT:= pi/2,ANGLE=.191986,E1=0.095993,E2=0.095993;
  SPTEL101: SBEND, L = 1.233, ANGLE = -0.593411946;
  SPTEL102: SBEND, L = 0.623, ANGLE = -0.034906585;
 
-DHSTB001: sbend,l=1.353,angle=0.0;    !bend to ...
+DHSTB001: sbend,l=1.353,angle=0.0;    !bend to ...???
 
 RETURN;

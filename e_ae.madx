@@ -3,8 +3,9 @@ option, -echo, warn;
 
 ! Creating the beam
 call, file="beamparams.madx";
-BEAM, PARTICLE = electron, energy = En,sige=se,sigt = 1.,
-    ex=emitx, ey=emity;
+beam, particle=electron,energy=en,radiate=true,ex=emitx,ey=emity,
+      sigt=bunchl,sige=esprd,et=bunchl*esprd,
+      bunched=true,kbunch=100,bcurrent=0.01;
 
 ! Elements strength is a function of the currents
 call, file="currents.madx";
@@ -24,9 +25,16 @@ CALL,FILE="lattice.d";
 call, file="savebeta.madx";
 ! Twiss 
 CALL,FILE="twiss_e_ae.cmd";
-! make plots of beam profile
+! store twiss params in files
 call, file="showbeta.madx";
-call, file="plotprofile.madx";
+
+! make plots of beam profile with the twiss results
+!call, file="plotprofile.madx";
+!stop;
+
+! ! Generating particles(flagname,Nparticles)
+system, "root -l -x -q "GenerateInrays.C(\"FL2TR001\",1000)"";
+
 
 stop;
 
@@ -55,16 +63,6 @@ value,CHVTE006->vkick;
 
 stop;
 
-! ! Tracking particles 
-! system, "rm -f beta0.txt beam0.txt";
-! assign, echo="beam0.txt";
-! show, beam;
-! assign, echo="beta0.txt";
-! show, betafl2TR001;
-! assign, echo="beta0.txt";
-! show, betafl2TR001;
-! assign, echo=terminal;
-! !system, "root -q -l -x GenerateInrays.C";
 
 
  emitx:=2.8e-7;

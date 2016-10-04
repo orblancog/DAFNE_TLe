@@ -14,9 +14,11 @@
 
 using namespace std;
 
-int GenerateInrays () {
+int GenerateInrays (const char * k, int N) {
+  cout << "  Using flag : "<< k << endl;
+  TString * myflname = new TString(k);
   //  gROOT->Reset();
-  int N =10000;//number of particles to generate
+  //  int N =10000;//number of particles to generate
   int debug=1; // if debug 1, print goes to stdout
   int madxtrac=1;//track in MAD-X and PTC_MAD-X
 
@@ -52,6 +54,8 @@ int GenerateInrays () {
   double_t sigmapy0 = 0;
   double_t sigmas0 = 0;
   double_t sigmad0 = 0;
+  double_t offsetx0 = 0;
+  double_t offsety0 = 0;
 
   TRandom2 *xrnd = new TRandom2(0);//any different seed will do
   TRandom2 *pxrnd = new TRandom2(1);
@@ -72,7 +76,6 @@ int GenerateInrays () {
   double_t upy=0;
   double_t upt=0;
 
-
   ofstream mydebug;
   ofstream mymadxtrac;
   ifstream beta0in;
@@ -90,13 +93,15 @@ int GenerateInrays () {
   char madx03[20];
   char madx04[20];
 
-
   // Read twiss info
-  beta0in.open("beta0.txt");
+  TString * betafl = new TString("beta");
+  betafl->Append(k);
+  betafl->Append(".txt");
+  beta0in.open(betafl->Data());
   if (beta0in == 0) {
     // if we cannot open the file, 
     // print an error message and return immediatly
-    printf("Error: cannot open beta0.txt!\n");
+    printf("Error: cannot open beta file!\n");
     return 1;
   }
   cout << "  ... reading file beta0.txt (twiss params at input)"<<endl;
@@ -110,6 +115,8 @@ int GenerateInrays () {
     if (!strcmp(madx01,"alfy")) {cout<<"    "<<madx01<<" "<<madx04<<endl;alfay=atof(madx04);}
     if (!strcmp(madx01,"dx")) {cout<<"    "<<madx01<<" "<<madx04<<endl;etax=atof(madx04);}
     if (!strcmp(madx01,"dpx")) {cout<<"    "<<madx01<<" "<<madx04<<endl;etapx=atof(madx04);}
+    if (!strcmp(madx01,"dy")) {cout<<"    "<<madx01<<" "<<madx04<<endl;etay=atof(madx04);}
+    if (!strcmp(madx01,"dpy")) {cout<<"    "<<madx01<<" "<<madx04<<endl;etapy=atof(madx04);}
   }
   cout << "    ... all others ignored.";
   cout << "  beta0.txt read."<<endl;
@@ -157,13 +164,10 @@ int GenerateInrays () {
   cout << "    beam0.txt read."<<endl;
   beam0in.close();
 
-
-
   if (debug) mydebug.open ("debug.txt");
   if (madxtrac) mymadxtrac.open ("madxInrays.madx");
   mymadxtrac << "! GenerateInrays. orblancog. 2016.07.28\n";  
   mymadxtrac << "! Dummy file generated in root\n";
-
 
   // Calculate sigma0
   sigmax0  = TMath::Sqrt(ex*betax);
@@ -171,7 +175,7 @@ int GenerateInrays () {
   sigmay0  = TMath::Sqrt(ey*betay);
   sigmapy0 = TMath::Sqrt(ey/betay);
   sigmas0  = TMath::Sqrt(et*0);
-  //  sigmad0  = TMath::Sqrt(et*0);
+  sigmad0  = Energyspread;//TMath::Sqrt(et*0);
 
   while (i<N){
     xbeta = xrnd->Gaus(0,sigmax0);

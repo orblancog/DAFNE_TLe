@@ -1,4 +1,5 @@
 ! showing betas
+system, "rm -f beta*.txt beam0.txt";! get initial values
 assign, echo="beam0.txt";
 show, beam;
 system, "rm -f betaFL2TR001.txt";
