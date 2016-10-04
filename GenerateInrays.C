@@ -1,5 +1,6 @@
 // oblancog. 2016.07.xx NO purpose tracking
 // this code generates the initial coordinates of the particles
+// reads the show,beam; and a show,betaXXX; output from madx
 
 // For the particle generation
 #include "TRandom2.h"//period=10**26, fast, 32 bits for the state
@@ -25,7 +26,7 @@ int GenerateInrays (const char * k, int N) {
   // Energy distribution 
   // 0=Uniform -EnergySpread/2 to EnergySpread/2
   // 1=Gaussian(0,sigma=EnergySpread)
-  int Edistr=1;
+  int Edistr=0;
 
   //Relativistic factors
   double_t gammar = 1;
