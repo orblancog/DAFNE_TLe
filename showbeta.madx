@@ -2,6 +2,9 @@
 system, "rm -f beta*.txt beam0.txt";! get initial values
 assign, echo="beam0.txt";
 show, beam;
+system, "rm -f betaSTART.txt";
+assign, echo="betaSTART.txt";
+show, betaSTART;
 system, "rm -f betaFL2TR001.txt";
 assign, echo="betaFL2TR001.txt";
 show, betaFL2TR001;

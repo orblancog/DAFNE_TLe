@@ -1,0 +1,11 @@
+observe, place=FL2TR001;
+observe, place=FL2TR002;
+observe, place=FL2TT001;
+observe, place=FL2TT002;
+observe, place=FL1TT001;
+observe, place=FL1TT002;
+observe, place=FL1TT003;
+observe, place=FL1TE001;
+observe, place=FL1TE002;
+observe, place=FL1TE003;
+observe, place=FL1EL101;

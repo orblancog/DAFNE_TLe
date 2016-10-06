@@ -33,7 +33,7 @@ call, file="showbeta.madx";
 !stop;
 
 ! ! Generating particles(flagname,Nparticles)
-system, 'root -l -x -q "GenerateInrays.C(\"FL2TR001\",1000)"';
+system, 'root -l -x -q "GenerateInrays.C(\"START\",10000)"';
 !stop;
 
 ! NO purpose tracking in MAD-X
@@ -55,8 +55,8 @@ system, "rm -f track*";
 track, onepass=true,aperture=true,onetable,recloss,dump;
 call, file="observe.madx";!observe;!set obeservation points
 !set particles
-start, X=1e-3, PX=1e-3, Y=1e-3, PY=1e-3, T=1e-9, PT=1e-9;
-start, X=1e-9, PX=1e-9, Y=1e-9, PY=1e-9, T=1e-9, PT=1e-9;
+!start, X=1e-3, PX=1e-3, Y=1e-3, PY=1e-3, T=1e-9, PT=1e-9;
+!start, X=1e-9, PX=1e-9, Y=1e-9, PY=1e-9, T=1e-9, PT=1e-9;
 call,file="madxInrays.madx";
 run,turns=1,maxaper={0.1,0.01,0.1,0.01,1.0,0.1};!run track
 !dynap;

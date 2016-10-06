@@ -29,7 +29,7 @@ int GenerateInrays (const char * k, int N) {
   int Edistr=1;
 
   // Limit of the gaussian
-  int gauslimit=3;
+  int gauslimit=6;
 
 
   //Relativistic factors
@@ -192,6 +192,8 @@ int GenerateInrays (const char * k, int N) {
   sigmapx0 = TMath::Sqrt(ex/betax);
   sigmay0  = TMath::Sqrt(ey*betay);
   sigmapy0 = TMath::Sqrt(ey/betay);
+
+  //  cout << sigmax0 << sigmay0;
   //  sigmas0  = TMath::Sqrt(et*0);//already assigned when reading beam0
   sigmad0  = 1.0/betar*Energyspread;//TMath::Sqrt(et*0);//\Delta E/(Pc) = 1/\beta_r * \Delta E/E
 
@@ -199,11 +201,11 @@ int GenerateInrays (const char * k, int N) {
     //x
     xbeta = xrnd->Gaus(0,sigmax0);
     pxbeta = pxrnd->Gaus(0,sigmapx0);
-    xgausvalue = (gammax*xbeta*xbeta+2*alfax*xbeta*pxbeta+betax*pxbeta*pxbeta)/(ex);
+    xgausvalue = (gammax*xbeta*xbeta+2*alfax*xbeta*pxbeta+betax*pxbeta*pxbeta)/(TMath::TwoPi()/2*ex);
     //y
     ybeta = yrnd->Gaus(0,sigmay0);
     pybeta = pyrnd->Gaus(0,sigmapy0);
-    ygausvalue = (gammay*ybeta*ybeta+2*alfay*ybeta*pybeta+betay*pybeta*pybeta)/(ey);
+    ygausvalue = (gammay*ybeta*ybeta+2*alfay*ybeta*pybeta+betay*pybeta*pybeta)/(TMath::TwoPi()/2*ey);
     //d
     ups = bunchlrnd->Gaus(0,sigmas0);
     if (Edistr){

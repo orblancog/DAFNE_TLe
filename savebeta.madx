@@ -1,3 +1,4 @@
+savebeta,label=betaSTART,place=#s;
 savebeta,label=betaFL2TR001,place=FL2TR001;
 savebeta,label=betaFL2TR002,place=FL2TR002;
 savebeta,label=betaFL2TT001,place=FL2TT001;

@@ -50,16 +50,31 @@ int DrawProfile (const char * k) {//k is the flag name
   string beta0string;
   ifstream beam0in;
   string beam0string;
+  ifstream track0in;
+  string track0string;
 
   int nlines;
   char beta0line[80];
   char beam0line[80];
+  char track0line[80];
 
   char madx00[20];
   char madx01[20];
   char madx02[20];
   char madx03[20];
   char madx04[20];
+
+  char track00[20];
+  char track01[20];
+  char track02[20];
+  char track03[20];
+  char track04[20];
+  char track05[20];
+  char track06[20];
+  char track07[20];
+  char track08[20];
+  char track09[20];
+  char track10[20];
 
   // Read twiss info
   TString * betafl = new TString("beta");
@@ -143,14 +158,17 @@ int DrawProfile (const char * k) {//k is the flag name
   //  sigmad0  = TMath::Sqrt(et*0);
 
   float scalehv=1e3;//mm
-  Double_t w = 600;
-  Double_t h = 600;
-  TCanvas * c1 = new TCanvas("c1", "c1", w, h);
+  Double_t w = 1200;
+  Double_t h =  600;
+  TCanvas * c1 = new TCanvas(betafl->Data(),betafl->Data(), w, h);
+  c1->SetGrid();
+  c1->Divide(2,1,0.01,0.01);
   c1->SetWindowSize(w + (w - c1->GetWw()), h + (h - c1->GetWh()));
   //  TCanvas *c1 = new TCanvas("c1");
+  c1->cd(1);
+
   c1->Range(-40e-3*scalehv,-40e-3*scalehv,40e-3*scalehv,40e-3*scalehv);
-  c1->SetFillColor(42);
-  c1->SetGrid();
+  //  c1->SetFillColor(42);
   //  c1->SetGrid(5,5);
   //  c1->SetGridx(2);
   //  c1->SetGridy(2);
@@ -161,7 +179,7 @@ int DrawProfile (const char * k) {//k is the flag name
   int y0[1]={0};
   TGraph *gr = new TGraph(1,x0,y0);
   gr->Draw("AC*");
-  gr->SetTitle(k);//input parameter
+  gr->SetTitle(betafl->Data());//input parameter
   gr->GetXaxis()->SetLimits(-40e-3*scalehv,40e-3*scalehv);
   gr->SetMinimum(-40e-3*scalehv);
   gr->SetMaximum(40e-3*scalehv);
@@ -182,6 +200,15 @@ int DrawProfile (const char * k) {//k is the flag name
   el1->SetFillColor(21);
   TEllipse *el2 = new TEllipse(offsetx0*scalehv,offsety0*scalehv,3*sigmax0*scalehv,3*sigmay0*scalehv);
   el1->SetFillColor(31);
+  TText* psigmax = new TText(-15,-20,Form("sigmax=%.1f",sigmax0*scalehv));
+  psigmax->Draw();
+  //  psigmax->SetTextSize(4);
+  TText* psigmay = new TText(-15,-25,Form("sigmay=%.1f",sigmay0*scalehv));
+  psigmay->Draw();
+  TText* poffsetx = new TText(-15,-30,Form("offsetx=%.1f",offsetx0*scalehv));
+  poffsetx->Draw();
+  TText* poffsety = new TText(-15,-35,Form("offsety=%.1f",offsety0*scalehv));
+  poffsety->Draw();
 
   cout << "  Drawing ellipse of axes [m]: " << sigmax0 << ' ' << sigmapx0<<endl;
   //  gr->GetXaxis()->SetNdivisions(10);
@@ -193,7 +220,50 @@ int DrawProfile (const char * k) {//k is the flag name
   el1->Draw();
   c1->RedrawAxis();
   //  gPad->WaitPrimitive();
+  //  c1->SaveAs(myflname->Append(".pdf"));
+
+  // From tracking
+  // Read trackinfo
+  //  TCanvas * c2 = new TCanvas("c2", "c2", w, h);
+
+  TString * trackfl = new TString("track");
+  trackfl->Append(k);
+  TH2 * trackh = new TH2F(trackfl->Data(),trackfl->Data(),400,-40,40,400,-40,40);
+  //  betafl->Append(".txt");
+  track0in.open(trackfl->Data());
+  //  track0in.open("trackSTART");
+  if (track0in == 0) {
+    // if we cannot open the file, 
+    // print an error message and return immediatly
+    cout<<"Error: cannot open file "<<trackfl->Data()<<"\n";
+    return 1;
+  }
+  cout << "  ... reading file "<<trackfl->Data()<<" (tracking results)"<<endl;
+  //  track0in >>  madx00 >> madx01 >> madx02 >> madx03;
+  while(!track0in.eof()){
+    track0in >> track01 >> track02 >> track03 >> track04 >> track05 >> track06 >> track07 >> track08 >> track09 >> track10;
+    //    cout << track03<<track05<< endl;
+    trackh->Fill(atof(track03)*scalehv,atof(track05)*scalehv);
+  }
+  //  cout << "    ... all others ignored.";
+  cout << "  "<<trackfl->Data()<<" read."<<endl;
+  track0in.close();
+  cout << "  Calculating gamma[xy]..."<<endl;
+  gammax = (1 + alfax*alfax )/betax;
+  gammay = (1 + alfay*alfay )/betay;
+  cout <<"    gammax "<<gammax<<endl;
+  cout <<"    gammay "<<gammay<<endl;
+  c1->cd(2);
+  trackh->Draw("colz");
+  trackh->SetTitle(trackfl->Data());
+  trackh->GetXaxis()->SetTitle("x [mm]");
+  trackh->GetYaxis()->SetTitle("y [mm]");
+  trackh->GetXaxis()->CenterTitle();
+  trackh->GetYaxis()->CenterTitle();
+
+  c1->RedrawAxis();
   c1->SaveAs(myflname->Append(".pdf"));
+
 
   return 0;
 }
