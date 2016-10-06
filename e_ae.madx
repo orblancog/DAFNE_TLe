@@ -33,8 +33,8 @@ call, file="showbeta.madx";
 !stop;
 
 ! ! Generating particles(flagname,Nparticles)
-system, "root -l -x -q "GenerateInrays.C(\"FL2TR001\",1000)"";
-
+system, 'root -l -x -q "GenerateInrays.C(\"FL2TR001\",1000)"';
+!stop;
 
 ! NO purpose tracking in MAD-X
 ! !stop;
@@ -51,6 +51,7 @@ system, "root -l -x -q "GenerateInrays.C(\"FL2TR001\",1000)"";
 
 ! use, sequence=e_ae;
 ! !set parameters
+system, "rm -f track*";
 track, onepass=true,aperture=true,onetable,recloss,dump;
 call, file="observe.madx";!observe;!set obeservation points
 !set particles
@@ -63,8 +64,8 @@ endtrack;
 write, table=trackloss, file="trackloss";!write lost particles
 !end of NO purpose tracking in MAD-X
 
-system, "sh getobservepoints";
-system, "sh getobservedata";
+! split tracking results inf plot friendly files
+system, "./getobservedata trackone";
 stop;
 
 
