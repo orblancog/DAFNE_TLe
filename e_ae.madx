@@ -62,7 +62,13 @@ run,turns=1,maxaper={0.1,0.01,0.1,0.01,1.0,0.1};!run track
 endtrack;
 write, table=trackloss, file="trackloss";!write lost particles
 !end of NO purpose tracking in MAD-X
+
+system, "sh getobservepoints";
+system, "sh getobservedata";
 stop;
+
+
+
 
 
 
