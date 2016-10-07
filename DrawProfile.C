@@ -156,16 +156,21 @@ int DrawProfile (const char * k) {//k is the flag name
   offsetx0 = etax*Energyspread;
   offsety0 = etay*Energyspread;
   //  sigmad0  = TMath::Sqrt(et*0);
+  cout << "  Calculating gamma[xy]..."<<endl;
+  gammax = (1 + alfax*alfax )/betax;
+  gammay = (1 + alfay*alfay )/betay;
+  cout <<"    gammax "<<gammax<<endl;
+  cout <<"    gammay "<<gammay<<endl;
 
   float scalehv=1e3;//mm
-  Double_t w = 1200;
+  Double_t w =  600;
   Double_t h =  600;
   TCanvas * c1 = new TCanvas(betafl->Data(),betafl->Data(), w, h);
   c1->SetGrid();
-  c1->Divide(2,1,0.01,0.01);
+  //  c1->Divide(2,1,0.01,0.01);
   c1->SetWindowSize(w + (w - c1->GetWw()), h + (h - c1->GetWh()));
   //  TCanvas *c1 = new TCanvas("c1");
-  c1->cd(1);
+  //  c1->cd(1);
 
   c1->Range(-40e-3*scalehv,-40e-3*scalehv,40e-3*scalehv,40e-3*scalehv);
   //  c1->SetFillColor(42);
@@ -173,54 +178,55 @@ int DrawProfile (const char * k) {//k is the flag name
   //  c1->SetGridx(2);
   //  c1->SetGridy(2);
   c1->SetFillStyle(4000);
-  c1->Draw();
-  c1->Update();
-  int x0[1]={0};
-  int y0[1]={0};
-  TGraph *gr = new TGraph(1,x0,y0);
-  gr->Draw("AC*");
-  gr->SetTitle(betafl->Data());//input parameter
-  gr->GetXaxis()->SetLimits(-40e-3*scalehv,40e-3*scalehv);
-  gr->SetMinimum(-40e-3*scalehv);
-  gr->SetMaximum(40e-3*scalehv);
-  gr->GetXaxis()->CenterTitle();
-  gr->GetYaxis()->CenterTitle();
-  gr->GetXaxis()->SetNdivisions(10);
-  gr->GetYaxis()->SetNdivisions(10);
-  //  gr->GetYaxis()->SetLabelOffset(10e-3*scalehv); 
-  //  gr->GetXaxis()->SetLabelOffset(10e-3*scalehv);
-  c1->Update();
+  // c1->Draw();
+  // c1->Update();
+  // int x0[1]={0};
+  // int y0[1]={0};
+  // TGraph *gr = new TGraph(1,x0,y0);
+  // gr->Draw("AC*");
+  // gr->SetTitle(betafl->Data());//input parameter
+  // gr->GetXaxis()->SetLimits(-40e-3*scalehv,40e-3*scalehv);
+  // gr->SetMinimum(-40e-3*scalehv);
+  // gr->SetMaximum(40e-3*scalehv);
+  // gr->GetXaxis()->CenterTitle();
+  // gr->GetYaxis()->CenterTitle();
+  // gr->GetXaxis()->SetNdivisions(10);
+  // gr->GetYaxis()->SetNdivisions(10);
+  // //  gr->GetYaxis()->SetLabelOffset(10e-3*scalehv); 
+  // //  gr->GetXaxis()->SetLabelOffset(10e-3*scalehv);
+  // c1->Update();
 
 
   TEllipse *bpipe=new TEllipse(0,0,40e-3*scalehv,40e-3*scalehv);
-  bpipe->SetFillColorAlpha(kWhite,0.0);
-  bpipe->SetFillStyle(4000);
-  bpipe->SetLineWidth(5);
-  TEllipse *el1 = new TEllipse(offsetx0*scalehv,offsety0*scalehv,sigmax0*scalehv,sigmay0*scalehv);
-  el1->SetFillColor(21);
+   bpipe->SetFillColorAlpha(kWhite,0.0);
+   bpipe->SetFillStyle(4000);
+   bpipe->SetLineWidth(2);
+  // TEllipse *el1 = new TEllipse(offsetx0*scalehv,offsety0*scalehv,sigmax0*scalehv,sigmay0*scalehv);
+  // el1->SetFillColor(21);
   TEllipse *el2 = new TEllipse(offsetx0*scalehv,offsety0*scalehv,3*sigmax0*scalehv,3*sigmay0*scalehv);
-  el1->SetFillColor(31);
+  el2->Draw();
+  el2->SetFillColor(31);
   TText* psigmax = new TText(-15,-20,Form("sigmax=%.1f",sigmax0*scalehv));
   psigmax->Draw();
-  //  psigmax->SetTextSize(4);
+  // //  psigmax->SetTextSize(4);
   TText* psigmay = new TText(-15,-25,Form("sigmay=%.1f",sigmay0*scalehv));
-  psigmay->Draw();
-  TText* poffsetx = new TText(-15,-30,Form("offsetx=%.1f",offsetx0*scalehv));
-  poffsetx->Draw();
-  TText* poffsety = new TText(-15,-35,Form("offsety=%.1f",offsety0*scalehv));
-  poffsety->Draw();
+   psigmay->Draw();
+  // TText* poffsetx = new TText(-15,-30,Form("offsetx=%.1f",offsetx0*scalehv));
+  // poffsetx->Draw();
+  // TText* poffsety = new TText(-15,-35,Form("offsety=%.1f",offsety0*scalehv));
+  // poffsety->Draw();
 
-  cout << "  Drawing ellipse of axes [m]: " << sigmax0 << ' ' << sigmapx0<<endl;
-  //  gr->GetXaxis()->SetNdivisions(10);
-  //  gr->GetYaxis()->SetNdivisions(10);
-  gr->GetXaxis()->SetTitle("x [mm]");
-  gr->GetYaxis()->SetTitle("y [mm]");
-  bpipe->Draw();
-  el2->Draw();
-  el1->Draw();
-  c1->RedrawAxis();
-  //  gPad->WaitPrimitive();
-  //  c1->SaveAs(myflname->Append(".pdf"));
+  cout << "  Beam sizes from twiss are : sigmax= " << sigmax0*scalehv << " [mm], sigmay= " << ' ' << sigmay0*scalehv<<" [mm]"<<endl;
+  // //  gr->GetXaxis()->SetNdivisions(10);
+  // //  gr->GetYaxis()->SetNdivisions(10);
+  // gr->GetXaxis()->SetTitle("x [mm]");
+  // gr->GetYaxis()->SetTitle("y [mm]");
+  // el1->Draw();
+  // c1->RedrawAxis();
+  //  bpipe->Draw();
+  //  el2->Draw();
+  // //  gPad->WaitPrimitive();
+  // //  c1->SaveAs(myflname->Append(".pdf"));
 
   // From tracking
   // Read trackinfo
@@ -248,12 +254,7 @@ int DrawProfile (const char * k) {//k is the flag name
   //  cout << "    ... all others ignored.";
   cout << "  "<<trackfl->Data()<<" read."<<endl;
   track0in.close();
-  cout << "  Calculating gamma[xy]..."<<endl;
-  gammax = (1 + alfax*alfax )/betax;
-  gammay = (1 + alfay*alfay )/betay;
-  cout <<"    gammax "<<gammax<<endl;
-  cout <<"    gammay "<<gammay<<endl;
-  c1->cd(2);
+  //  c1->cd(2);
   trackh->Draw("colz");
   trackh->SetTitle(trackfl->Data());
   trackh->GetXaxis()->SetTitle("x [mm]");
@@ -261,8 +262,11 @@ int DrawProfile (const char * k) {//k is the flag name
   trackh->GetXaxis()->CenterTitle();
   trackh->GetYaxis()->CenterTitle();
 
+  bpipe->Draw();
+  el2->Draw();
+
   c1->RedrawAxis();
-  c1->SaveAs(myflname->Append(".pdf"));
+  c1->SaveAs(myflname->Append("prof.pdf"));
 
 
   return 0;

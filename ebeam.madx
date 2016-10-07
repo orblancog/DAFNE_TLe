@@ -1,0 +1,27 @@
+! Beam params, data from accumulator
+En    := 0.51;![GeV]
+emitx := 2.8e-7;![m]
+emity := 1.4e-7;![m]
+esprd := 0.1e-2;![1]
+bunchl:= 1.357e-2;![m] = clight/(120*368.667MHz)
+
+! EAE SETUP
+emitx_ae := emitx;!2.8e-7;![m]
+emity_ae := emity;![m]
+delp_ae  := delp;![1]
+
+// =====
+// Optic function at A septa from Oct 2013 measurements
+// =====
+!emitx   = 1.e-6;
+!emity   = 1.e-6;
+!delp    = 5.e-3;
+
+! Radiate=false because Urad is negligible (some eV)
+!   and beam passes only once/twice max 
+beam, particle=electron,energy=en,radiate=false,ex=emitx,ey=emity,
+      sigt=bunchl,sige=esprd,et=bunchl*esprd,
+      bunched=true,kbunch=100,bcurrent=0.01;
+! value, beam->Pc;
+! show, beam;
+!stop;
