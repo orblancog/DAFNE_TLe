@@ -12,12 +12,26 @@
 
 ! ??? No info
 ! c1ss = 9.1277e-3;  ! small QUADRUPOLEs used in the day-one
-! c2ss = 4.53e-3;     
+! c2ss = 4.53e-3;    
+! orblancog. 2016107 Some other values that were here ??? 
+! c1ss = 3.9786e-3; !
+! c2ss = 2.72e-3;
 ! orblancog. 2016.09 trying values of type A quads
- c1ss = 2.51e-2;
- c2ss = 7.13e-3;
-! c1ss = 3.9786e-3
-! c2ss = 2.72e-3
+! orblancog. 2016.10 
+! DAFNE Technical Note : MM-4, 
+! Measurements on Tesla Quadrupole Prototype for the
+!   DAFNE Accumulator and Main Rings, pag.~3
+! Nominal working point : 8.118[T/m] @ 262.28[A]
+! Good field region : 30[mm]
+! Fitting Figure~2 with engauge-digitizer+gnuplot : gives f(x)=a*x+b
+! Final set of parameters            Asymptotic Standard Error
+! =======================            ==========================
+! a               = 0.0311115        +/- 0.000103     (0.3312%)
+! b               = -0.0110217       +/- 0.01787      (162.1%)
+! K1 = 0.0311115*clight*I/(0.3*1e9*E) + 0.01*clight*I/(0.3*1e9*E)
+! K1 [m^-2], E [GeV]. I [A]
+ c1ss = 3.109e-2;//
+ c2ss = 1e-2;//
 
 ! DAFNE Technical Note : C-17, 
 ! Transfer Line Quadrupoles (Type A), pag.~7
@@ -28,7 +42,7 @@
  c2l = 7.13e-3;
 
 !list of quadrupoles in DAFNE TRANSFER LINE
-! L is the half Length of the quadrupolerupoles
+! L is the half Length of the quadrupoles
 
 ! half last Linac quadrupole
  QLE0    : quadrupole,L = 0.14,K1 := KLE0;
@@ -94,7 +108,7 @@
  QUATP003: quadrupole,l := lsq/2, K1 := ktp03;
  QUATP004: quadrupole,l := lsq/2, K1 := ktp04;
 
-! Quadrupole  k**2 [m**-2] as a function of the Energy [MeV] and
+! Quadrupole  k**2 [m**-2] as a function of the Energy [MeV???] and
 ! power supply Current [A]
 
  kle0  := (0.07*cle0+0.05)*(0.510/en);

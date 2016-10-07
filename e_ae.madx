@@ -6,7 +6,8 @@ call, file="beamparams.madx";
 beam, particle=electron,energy=en,radiate=false,ex=emitx,ey=emity,
       sigt=bunchl,sige=esprd,et=bunchl*esprd,
       bunched=true,kbunch=100,bcurrent=0.01;
-
+!value, beam->Pc;
+!stop;
 ! Elements strength is a function of the currents
 call, file="currents.madx";
 
@@ -66,7 +67,8 @@ write, table=trackloss, file="trackloss";!write lost particles
 
 ! split tracking results inf plot friendly files
 system, "./getobservedata trackone";
-stop;
+survey,file="survey";
+!stop;
 
 
 
@@ -92,7 +94,8 @@ value,CHVTE003->hkick,CHVTE003->vkick;
 value,CHVTE003->vkick;
 value,CHVTE004->hkick;
 value,CHVTE006->vkick;
-
+value,QUATE104->k1,QUATE104->L;
+value,QUATE105->k1,QUATE105->L;
 
 
 ! !! touschek

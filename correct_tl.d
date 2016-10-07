@@ -61,7 +61,9 @@ CHVTR001: kicker,
 	   vkick:= 1/en * ccvtall1*CVVTR003 + ccvtall2;
 
 
-!EXTRACTION ACCUMULATOR -> DAFNE MRe-???
+! ! EXTRACTION ACCUMULATOR -> DAFNE MRe-???
+! The commented kickers are already defined and are 
+! left here as info :
 ! CHVTT001: kicker,
 ! CHVTT002: kicker,
 ! CHVTT003: kicker,
