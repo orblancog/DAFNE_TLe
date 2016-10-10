@@ -267,8 +267,10 @@ int DrawProfile (const char * k, const char * invaxis = NULL) {//k is the flag n
   //  c1->cd(2);
   trackh->Draw("colz");
   trackh->SetTitle(trackfl->Data());
-  trackh->GetXaxis()->SetTitle("x [mm]");
-  trackh->GetYaxis()->SetTitle("y [mm]");
+  if (xsgn == -1)  trackh->GetXaxis()->SetTitle("x [mm] (mirror)");
+  else trackh->GetXaxis()->SetTitle("x [mm]");
+  if (ysgn == -1)  trackh->GetYaxis()->SetTitle("y [mm] (mirror)");
+  else trackh->GetYaxis()->SetTitle("y [mm]");
   trackh->GetXaxis()->CenterTitle();
   trackh->GetYaxis()->CenterTitle();
 
