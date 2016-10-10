@@ -15,9 +15,17 @@
 
 using namespace std;
 
-int DrawProfile (const char * k) {//k is the flag name 
+int DrawProfile (const char * k, const char * invaxis = NULL) {//k is the flag name 
   cout << "  Using flag : "<< k << endl;
   TString * myflname = new TString(k);
+  int xsgn = 1;
+  int ysgn = 1;
+  if (invaxis != NULL){
+    cout << "    flag inverts profile in : "<< invaxis << endl;
+    if ( strcmp(invaxis,"x") == 0 ){ xsgn = -1;}
+    if ( strcmp(invaxis,"y") == 0 ){ ysgn = -1;}
+    if ( strcmp(invaxis,"xy")== 0 ){ xsgn = -1; ysgn = -1;}
+  }
   //Beam geometrical emittances
   double_t ex = 1;
   double_t ey = 1;
@@ -246,10 +254,12 @@ int DrawProfile (const char * k) {//k is the flag name
   }
   cout << "  ... reading file "<<trackfl->Data()<<" (tracking results)"<<endl;
   //  track0in >>  madx00 >> madx01 >> madx02 >> madx03;
+
   while(!track0in.eof()){
     track0in >> track01 >> track02 >> track03 >> track04 >> track05 >> track06 >> track07 >> track08 >> track09 >> track10;
     //    cout << track03<<track05<< endl;
-    trackh->Fill(atof(track03)*scalehv,atof(track05)*scalehv);
+    trackh->Fill(xsgn*atof(track03)*scalehv,ysgn*atof(track05)*scalehv);
+
   }
   //  cout << "    ... all others ignored.";
   cout << "  "<<trackfl->Data()<<" read."<<endl;
@@ -263,7 +273,7 @@ int DrawProfile (const char * k) {//k is the flag name
   trackh->GetYaxis()->CenterTitle();
 
   bpipe->Draw();
-  el2->Draw();
+  //  el2->Draw();
 
   c1->RedrawAxis();
   c1->SaveAs(myflname->Append("prof.pdf"));
