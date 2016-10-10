@@ -273,13 +273,13 @@ int DrawProfile (const char * k, const char * invaxis = NULL) {//k is the flag n
   else trackh->GetYaxis()->SetTitle("y [mm]");
   trackh->GetXaxis()->CenterTitle();
   trackh->GetYaxis()->CenterTitle();
+  cout << "  Correlation : "<< trackh->GetCorrelationFactor()<< endl;
 
   bpipe->Draw();
   //  el2->Draw();
 
   c1->RedrawAxis();
   c1->SaveAs(myflname->Append("prof.pdf"));
-
 
   return 0;
 }
