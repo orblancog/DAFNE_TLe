@@ -1,0 +1,10 @@
+if (abs(SPTA2001) >= 2300){system, 'echo "max current warning (>2300)! "';value, spta2001;};
+if (abs(SPTA2002) >= 2300){system, 'echo "max current warning (>2300)!"';value, spta2002;};
+if (abs(dvrtr001) >= 60)  {system, 'echo "non-linear current warning (>60)!"';value, dvrtr001;};
+if (abs(dvrtr001) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrtr001;};
+if (abs(dvrtr002) >= 60)  {system, 'echo "non-linear current warning (>60)!"';value, dvrtr002;};
+if (abs(dvrtr002) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrtr002;};
+if (abs(dhytt001) >= 120)  {system, 'echo "max current warning (>120)!"';value, dhytt001;};
+if (abs(dhptt001) >= 300)  {system, 'echo "non-linear current warning (>300)!"';value, dhptt001;};
+if (abs(dhptt001) >= 650)  {system, 'echo "max current warning (>650)!"';value, dhptt001;};
+

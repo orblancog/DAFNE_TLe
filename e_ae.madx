@@ -7,32 +7,32 @@ call, file="ebeam.madx";
 ! Machine files
 ! Elements strength is a function of the currents
 call, file="currents.madx";//loading current dataset
-call, file="checkcur.madx";
-stop;
+call, file="checkcur.madx";!stop;
 CALL, FILE="loc_e_ae.par";
 CALL, FILE="markers_tl.d";
 CALL, FILE="drift_tl.d";
 CALL, FILE="correct_tl.d";
 CALL, FILE="quad_tl.d";
-CALL, FILE="bend_e_Ae.d";
+ CALL, FILE="bend_e_Ae.d";
 CALL, FILE="lattice.d";
-use, sequence= e_ae;
+use, sequence= e_ae, range=#s/FL1TT001;
 //CALL,FILE="rematch7_2l.cmd";
 //CALL,FILE="rematch_quate.cmd";
 ! savebeta in flags...
 call, file="savebeta.madx";
 ! Twiss with initial betas
 CALL,FILE="twiss_e_ae.cmd";
+!stop;
 ! store twiss params in files
 call, file="showbeta.madx";
-!stop;
+stop;
 
 ! ! Generating particles(flagname,Nparticles)
-system, 'root -l -x -q "GenerateInrays.C(\"START\",10000)"';
+system, 'root -l -x -q "GenerateInrays.C(\"START\",1e4)"';
 !stop;
 
 ! NO purpose tracking in MAD-X
-! !stop;
+!stop;
 
 ! !makethin lenses
 ! !select,flag=makethin,class=sbend,thick=false;!no sbends...OK
@@ -94,8 +94,9 @@ system, "ps2pdf madx.ps";
 !value,CHVTE006->vkick;
 !value,QUATE104->k1,QUATE104->L;
 !value,QUATE105->k1,QUATE105->L;
-value,table(twiss,QUATE005,s);
-value,table(twiss,QUATE006,s);
+!value,table(twiss,FL2TR001,s);
+!value,table(twiss,QUATE005,s);
+!value,table(twiss,QUATE006,s);
 
 
 ! !! touschek
