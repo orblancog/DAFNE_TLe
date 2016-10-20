@@ -1,3 +1,4 @@
+system, 'root -x -l -q "DrawProfile.C(\"START\")" ';
 system, 'root -x -l -q "DrawProfile.C(\"FL2TR001\")" ';
 system, 'root -x -l -q "DrawProfile.C(\"FL2TR002\")" ';
 system, 'root -x -l -q "DrawProfile.C(\"FL2TT001\")" ';

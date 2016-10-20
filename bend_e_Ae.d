@@ -2,23 +2,51 @@
 !dipoles 
 !beam out EXTRACTION ELECTRONS FROM ACCUM. TO TR
 
-! orblancog. 2016.09
-! DAFNE Technical Note : C-17,MM-7
-!   Dipoles, pag.~6
-!   SPTA1001, SPTA2001
-!   \alpha = 0.038 (2.177°), L nom = 0.623
-! \alpha [rad], L [m]
 ! 2003 data
 ! SPTA2002: SBEND,L=.623,ANGLE=.0349066;
+! orblancog. 2016.10
+! DAFNE Technical Note : MM-7, pag.~2
+!   \alpha = 0.038 (2.177°), L nom = 0.623+/-0.00025
+! \alpha [rad], L [m]
+! Fitting Figure~3 with engauge-digitizer+gnuplot : gives f(x)=a*x+b in Gauss and [A], 1Gauss=1e-4[T]
+! Final set of parameters            Asymptotic Standard Error
+! =======================            ==========================
+! a               = 0.564897         +/- 0.00066      (0.1168%)
+! b               = -2.94169         +/- 0.901        (30.63%)
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LSPTA2002 := 0.623;
+MANGSPTA2002 := LSPTA2002*clight/(1e9*en)*1e-4*(0.565*SPTA2002-2.9); !magnetic angle
+PANGSPTA2002 := 0.038; !physical angle
+SPTA2002 : SBEND,L:=LSPTA2002,ANGLE:=MANGSPTA2002;
+ ! fake kicker to match the physical angle in the TL
+SPTA2002K: KICKER,L=0,HKICK:=PANGSPTA2002 - MANGSPTA2002;
+!value, spta2002k->hkick;
+!value, spta2002->angle;
+
+!stop;
+
 ! Strangely enough... SPTA2001 has the length of SPTTL001, SPTTR001
-! \alpha = 0.5934 (34°), L nom = 1.233
 ! SPTA2001: SBEND,L=1.233,ANGLE=.593411946;
-! 2016
- SPTA2002: SBEND,L=.623,ANGLE=.038;
- SPTA2001: SBEND,L=1.233,ANGLE=0.593;
+! \alpha = 0.5934 (34°), L nom = 1.233
+! orblancog. 2016.09
+! DAFNE Technical Note : C-17 pag.~6, MM-7 pag.~2
+!   Dipoles SPTA1001, SPTA2001
+!   \alpha = 0.038 (2.177°), L nom = 0.623
+! \alpha [rad], L [m]
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LSPTA2001 := 0.623;
+MANGSPTA2001 := LSPTA2001*clight/(1e9*en)*1e-4*(0.565*SPTA2001-2.9); !magnetic angle
+PANGSPTA2001 := 0.038; !physical angle
+SPTA2001 : SBEND,L:=LSPTA2001,ANGLE:=MANGSPTA2001;
+ ! fake kicker to match the physical angle in the TL
+SPTA2001K: KICKER,L=0,HKICK:=PANGSPTA2001 - MANGSPTA2001;
+!value, spta2001k->hkick;
+!value, spta2001->angle;
+!stop;
 
 ! vertical magnet
  DVRTR002: SBEND,L=.35,TILT := pi/2,ANGLE=-.191986,E1=-0.095993,E2=-0.095993;  ! Bends upward
+
  DVRTR001: SBEND,L=.35,TILT := pi/2,ANGLE=.191986,E1=0.095993,E2=0.095993;     ! Bends downward
 
 !Y  magnet for e- extraction  beam out  FROM ACCUMULATOR

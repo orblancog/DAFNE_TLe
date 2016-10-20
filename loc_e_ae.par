@@ -3,10 +3,10 @@
 ! March 2003
 !
 ! en = 0.51;
- dpp = 1.;
- br0 = 1.701176886;
- bro := br0*dpp;
- eps = 0.;
+! dpp = 1.;
+! br0 = 1.701176886;
+! bro := br0*dpp;
+! eps = 0.;
 
 !************* e-  ACCUM. EXTRACTION  **********************************
 ! quadrupoles sign for e- accum. extr. to dafne
