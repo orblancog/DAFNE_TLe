@@ -54,8 +54,8 @@ PANGSPTA2002 := 0.5934; !physical angle
 SPTA2002 : SBEND,L:=LSPTA2002,ANGLE:=MANGSPTA2002;
 ! fake kicker to match the physical angle in the TL
 SPTA2002K: KICKER,L=0,HKICK:=PANGSPTA2002 - MANGSPTA2002;
-value, spta2002k->hkick;
-value, spta2002->angle;
+!value, spta2002k->hkick;
+!value, spta2002->angle;
 !stop;
 
 
@@ -138,8 +138,7 @@ VBP: SBEND,L=.35,TILT:= pi/2,ANGLE=.191986,E1=0.095993,E2=0.095993;
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
 LDHPTT001 := 1.113;
 if (abs(DHPTT001) <= 300){
-  MANGDHPTT001 := LDHPTT001*clight/(1e9*en)*(1.2129e-4 + 2.419e-3*abs(DHPTT001));
-value, MANGDHPTT001;}
+  MANGDHPTT001 := LDHPTT001*clight/(1e9*en)*(1.2129e-4 + 2.419e-3*abs(DHPTT001));}
 else {
   MANGDHPTT001 := LDHPTT001*clight/(1e9*en)*(-1.3699e-13*DHPTT001^4 + 3.7969e-9*abs(DHPTT001)^3 - 7.7012e-6*(DHPTT001)^2 + 6.2805e-3*abs(DHPTT001) - 0.56665);};
 PANGDHPTT001 := 0.7854; !physical angle
@@ -148,10 +147,30 @@ DHPTT001 : SBEND,L:=LDHPTT001,ANGLE:=MANGDHPTT001;!magnetic angle
 DHPTT001K: KICKER,L=0,hKICK:=PANGDHPTT001 - MANGDHPTT001;
 !value, DHPTT001k->hkick;
 !value, DHPTT001->angle;
+stop;!
+
+
+! DHPTT002: SBEND, L = 1.113, ANGLE = -0.785398163;
+! orblancog. 2016.10 I suppose this is equal to DHPTT001, with neg angle
+! DAFNE Technical Note : C-17 pag.~4
+!   Dipoles DHPTT001
+!   \alpha = 0.7854 (45°), L nom = 1.113
+! \alpha [rad], L [m]
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LDHPTT002 := 1.113;
+if (abs(DHPTT002) <= 300){
+  MANGDHPTT002 := -1*LDHPTT002*clight/(1e9*en)*(1.2129e-4 + 2.419e-3*abs(DHPTT002));}
+else {
+  MANGDHPTT002 := -1*LDHPTT002*clight/(1e9*en)*(-1.3699e-13*DHPTT002^4 + 3.7969e-9*abs(DHPTT002)^3 - 7.7012e-6*(DHPTT002)^2 + 6.2805e-3*abs(DHPTT002) - 0.56665);};
+PANGDHPTT002 := -0.7854; !physical angle
+DHPTT002 : SBEND,L:=LDHPTT002,ANGLE:=MANGDHPTT002;!magnetic angle
+! fake kicker to match the physical angle in the TL
+DHPTT002K: KICKER,L=0,hKICK:=PANGDHPTT002 - MANGDHPTT002;
+value, DHPTT002k->hkick;
+value, DHPTT002->angle;
 !stop;!
 
 
- DHPTT002: SBEND, L = 1.113, ANGLE = -0.785398163;
 
  DHRTT001: SBEND,L=0.757,ANGLE=-0.52359878,E1=-0.261799388,
             E2=-0.261799388;

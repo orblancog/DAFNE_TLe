@@ -15,7 +15,7 @@ CALL, FILE="correct_tl.d";
 CALL, FILE="quad_tl.d";
  CALL, FILE="bend_e_Ae.d";
 CALL, FILE="lattice.d";
-use, sequence= e_ae, range=#s/FL1TT001;
+use, sequence= e_ae, range=#s/FL2TT001;
 //CALL,FILE="rematch7_2l.cmd";
 //CALL,FILE="rematch_quate.cmd";
 ! savebeta in flags...
@@ -25,7 +25,7 @@ CALL,FILE="twiss_e_ae.cmd";
 !stop;
 ! store twiss params in files
 call, file="showbeta.madx";
-stop;
+!stop;
 
 ! ! Generating particles(flagname,Nparticles)
 system, 'root -l -x -q "GenerateInrays.C(\"START\",1e4)"';

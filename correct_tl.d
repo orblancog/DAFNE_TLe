@@ -50,7 +50,7 @@ ccvtall2 = 1.011e-6;
  CHVTL001: kicker,
   	   hkick:= 1/en * ccvtall1*CHHTL001 + ccvtall2,
 	   vkick:= 1/en * ccvtall1*CVVTL001 + ccvtall2;
-CHVTR001: kicker,
+ CHVTR001: kicker,
  	   hkick:= 1/en * ccvtall1*CHHTR001 + ccvtall2,
 	   vkick:= 1/en * ccvtall1*CVVTR001 + ccvtall2;
  CHVTR002: kicker,
