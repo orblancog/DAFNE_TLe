@@ -1,3 +1,5 @@
+observe, place=D9;
+observe, place=CHVTR003;
 observe, place=FL2TR001;
 observe, place=FL2TR002;
 observe, place=FL2TT001;

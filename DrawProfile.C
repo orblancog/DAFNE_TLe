@@ -242,7 +242,7 @@ int DrawProfile (const char * k, const char * invaxis = NULL) {//k is the flag n
 
   TString * trackfl = new TString("track");
   trackfl->Append(k);
-  TH2 * trackh = new TH2F(trackfl->Data(),trackfl->Data(),240,-120,120,240,-120,120);
+  TH2 * trackh = new TH2F(trackfl->Data(),trackfl->Data(),500,-250,250,500,-250,250);
   //  betafl->Append(".txt");
   track0in.open(trackfl->Data());
   //  track0in.open("trackSTART");

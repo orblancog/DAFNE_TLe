@@ -55,9 +55,19 @@ if (abs(dvrtr002) >= 60)  {system, 'echo "non-linear current warning (>60)!"';va
 if (abs(dvrtr002) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrtr002;};
 if (abs(dhytt001) >= 120)  {system, 'echo "max current warning (>120)!"';value, dhytt001;};
 if (abs(dhptt001) >= 300)  {system, 'echo "non-linear current warning (>300)!"';value, dhptt001;};
+if (abs(dhptt001) >= 650)  {system, 'echo "max current warning (>650)!"';value, dhptt001;};
+if (abs(dhptt002) >= 300)  {system, 'echo "non-linear current warning (>300)!"';value, dhptt002;};
 if (abs(dhptt002) >= 650)  {system, 'echo "max current warning (>650)!"';value, dhptt002;};
-if (abs(dhptt001) >= 300)  {system, 'echo "non-linear current warning (>300)!"';value, dhptt002;};
-if (abs(dhptt001) >= 650)  {system, 'echo "max current warning (>650)!"';value, dhptt002;};
+if (abs(dhstt001) >= 300)  {system, 'echo "non-linear current warning (>300)!"';value, dhstt001;};
+if (abs(dhstt001) >= 650)  {system, 'echo "max current warning (>650)!"';value, dhstt001;};
+if (abs(dvrtt001) >= 60)  {system, 'echo "non-linear current warning (>60)!"';value, dvrtt001;};
+if (abs(dvrtt001) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrtt001;};
+if (abs(dvrtt002) >= 60)  {system, 'echo "non-linear current warning (>60)!"';value, dvrtt002;};
+if (abs(dvrtt002) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrtt002;};
+if (abs(dvrte001) >= 60)  {system, 'echo "non-linear current warning (>60)!"';value, dvrte001;};
+if (abs(dvrte001) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrte001;};
+if (abs(dvrte002) >= 60)  {system, 'echo "non-linear current warning (>60)!"';value, dvrte002;};
+if (abs(dvrte002) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrte002;};
 
 ! quadrupoles
 if (abs(CTM001) >= 100)  {system, 'echo "max current warning (>100)!"';value, CTM001;};
