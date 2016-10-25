@@ -12,8 +12,8 @@
  betyacc = 4.041;!4.53;
  alfxacc = 1.017;!0.66;
  alfyacc = 0.458;!0.37;
- dxacc   = 0.2166557213;
- dyacc   = 0.05440481193;
+ dxacc   = 0;!0.2166557213;
+ dyacc   = 0;!0.05440481193;
 ! forward twiss
 !use, sequence= e_ae;
 
