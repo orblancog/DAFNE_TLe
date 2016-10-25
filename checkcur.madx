@@ -67,7 +67,10 @@ if (abs(dvrtt002) >= 120)  {system, 'echo "max current warning (>120)!"';value, 
 if (abs(dvrte001) >= 60)  {system, 'echo "non-linear current warning (>60)!"';value, dvrte001;};
 if (abs(dvrte001) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrte001;};
 if (abs(dvrte002) >= 60)  {system, 'echo "non-linear current warning (>60)!"';value, dvrte002;};
-if (abs(dvrte002) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrte002;};
+if (abs(dvrte003) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrte003;};
+if (abs(dvrte004) >= 120)  {system, 'echo "max current warning (>120)!"';value, dvrte004;};
+if (abs(SPTEL101) >= 2300){system, 'echo "max current warning (>2300)! "';value, sptel101;};
+if (abs(SPTEL102) >= 2300){system, 'echo "max current warning (>2300)! "';value, sptel102;};
 
 ! quadrupoles
 if (abs(CTM001) >= 100)  {system, 'echo "max current warning (>100)!"';value, CTM001;};

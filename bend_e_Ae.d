@@ -1,6 +1,9 @@
 ! March '03
 !dipoles 
 !beam out EXTRACTION ELECTRONS FROM ACCUM. TO TR
+tkon = 0; !! trackkicker on
+vdon = 0; !! vertical dipole on
+hdon = 1; !! horizontal dipole on
 
 ! orblancog. 2016.09 Maybe this is the first magnet ???
 ! DAFNE Technical Note : C-17 pag.~6, MM-7 pag.~2
@@ -8,12 +11,12 @@
 !   \alpha = 0.038 (2.177°), L nom = 0.623, I nom=1811.2
 ! \alpha [rad], L [m]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LSPTA2001 := 1/4*0.623;
+LSPTA2001 := 1/1*0.623;
 MANGSPTA2001 := LSPTA2001*clight/(1e9*en)*1e-4*(0.565*SPTA2001-2.9); !magnetic angle
-PANGSPTA2001 := 1/4*43.63e-3;!physical angle, tech.note.I-7, pag~13. ???  i thought it was 0.038
-SPTA2001 : SBEND,L:=LSPTA2001,ANGLE:=MANGSPTA2001;
+PANGSPTA2001 := 1/1*38.00e-3;!physical angle, tech.note.I-7, pag~13. ???  i thought it was 0.038
+SPTA2001 : SBEND,L:=LSPTA2001,ANGLE:=hdon*MANGSPTA2001;
  ! fake kicker to match the physical angle in the TL
-SPTA2001K: KICKER,L=0,HKICK:=PANGSPTA2001 - MANGSPTA2001;
+SPTA2001K: KICKER,L=0,HKICK:=tkon*(PANGSPTA2001 - MANGSPTA2001);
 !value, spta2001k->hkick*4;
 !value, spta2001->angle*4;
 !stop;
@@ -37,7 +40,7 @@ SPTA2001K: KICKER,L=0,HKICK:=PANGSPTA2001 - MANGSPTA2001;
 !LSPTA2002 := 0.623;
 !MANGSPTA2002 := LSPTA2002*clight/(1e9*en)*1e-4*(0.565*SPTA2002-2.9); !magnetic angle
 !PANGSPTA2002 := 0.038; !physical angle
-!SPTA2002 : SBEND,L:=LSPTA2002,ANGLE:=MANGSPTA2002;
+!SPTA2002 : SBEND,L:=LSPTA2002,ANGLE:=hdon*MANGSPTA2002;
 ! fake kicker to match the physical angle in the TL
 !SPTA2002K: KICKER,L=0,HKICK:=PANGSPTA2002 - MANGSPTA2002;
 !value, spta2002k->hkick;
@@ -48,12 +51,12 @@ SPTA2001K: KICKER,L=0,HKICK:=PANGSPTA2001 - MANGSPTA2001;
 !   \alpha = 0.5934 (34°), L nom = 1.233, I nom=2082.1
 ! \alpha [rad], L [m]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LSPTA2002 := 1/60*1.233;
+LSPTA2002 := 1/1*1.233;
 MANGSPTA2002 := LSPTA2002*clight/(1e9*en)*(3.9324e-4*abs(SPTA2002)); !magnetic angle
-PANGSPTA2002 := 1/60*0.5934; !physical angle
-SPTA2002 : SBEND,L:=LSPTA2002,ANGLE:=MANGSPTA2002;
+PANGSPTA2002 := 1/1*0.5934; !physical angle
+SPTA2002 : SBEND,L:=LSPTA2002,ANGLE:=hdon*MANGSPTA2002;
 ! fake kicker to match the physical angle in the TL
-SPTA2002K: KICKER,L=0,HKICK:=PANGSPTA2002 - MANGSPTA2002;
+SPTA2002K: KICKER,L=0,HKICK:=tkon*(PANGSPTA2002 - MANGSPTA2002);
 !value, spta2002k->hkick*60;
 !value, spta2002->angle*60;
 !stop;
@@ -67,15 +70,15 @@ SPTA2002K: KICKER,L=0,HKICK:=PANGSPTA2002 - MANGSPTA2002;
 !   \alpha = 0.192 (11°), L nom = 0.35, I nom=100.19
 ! \alpha [rad], L [m]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDVRTR001 := 1/20*0.35;
+LDVRTR001 := 1/1*0.35;
 if (abs(DVRTR001) <= 60){
 MANGDVRTR001 := LDVRTR001*clight/(1e9*en)*(1.0514e-3 + 1.1010e-2*abs(DVRTR001));}
 else{MANGDVRTR001 := LDVRTR001*clight/(1e9*en)*(-1.7718e-10*DVRTR001^4 + 9.0349e-7*abs(DVRTR001)^3 - 2.8357e-4*DVRTR001^2 + 3.4797e-2*abs(DVRTR001) - 0.59817);
 };
-PANGDVRTR001 := 1/20*0.192; !physical angle
-DVRTR001 : SBEND,L:=LDVRTR001,TILT:=TWOPI/4,ANGLE:=MANGDVRTR001,E1=0.095993,E2=0.095993;!magnetic angle
+PANGDVRTR001 := 1/1*0.192; !physical angle
+DVRTR001 : SBEND,L:=LDVRTR001,TILT:=TWOPI/4,ANGLE:=vdon*MANGDVRTR001,E1=0.095993,E2=0.095993;!magnetic angle
 ! fake kicker to match the physical angle in the TL
-DVRTR001K: KICKER,L=0,VKICK:=PANGDVRTR001 - MANGDVRTR001;
+DVRTR001K: KICKER,L=0,VKICK:=tkon*(PANGDVRTR001 - MANGDVRTR001);
 !value, dvrtr001k->vkick*20;
 !value, dvrtr001->angle*20;
 !stop;
@@ -88,15 +91,15 @@ DVRTR001K: KICKER,L=0,VKICK:=PANGDVRTR001 - MANGDVRTR001;
 !   \alpha = 0.192 (11°), L nom = 0.35, I nom=100.19
 ! \alpha [rad], L [m]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDVRTR002 := 1/20*0.35;
+LDVRTR002 := 1/1*0.35;
 if (abs(DVRTR002) <= 60){
 MANGDVRTR002 := -1*LDVRTR002*clight/(1e9*en)*(1.0514e-3 + 1.1010e-2*abs(DVRTR002));}
 else{MANGDVRTR002 := -1*LDVRTR002*clight/(1e9*en)*(-1.7718e-10*DVRTR002^4 + 9.0349e-7*abs(DVRTR002)^3 - 2.8357e-4*DVRTR002^2 + 3.4797e-2*abs(DVRTR002) - 0.59817);
 };
-PANGDVRTR002 := -0.192*1/20; !physical angle
-DVRTR002 : SBEND,L:=LDVRTR002,TILT:=TWOPI/4,ANGLE:=MANGDVRTR002,E1=0.095993,E2=0.095993;!magnetic angle
+PANGDVRTR002 := -0.192*1/1; !physical angle
+DVRTR002 : SBEND,L:=LDVRTR002,TILT:=TWOPI/4,ANGLE:=vdon*MANGDVRTR002,E1=0.095993,E2=0.095993;!magnetic angle
 ! fake kicker to match the physical angle in the TL
-DVRTR002K: KICKER,L=0,VKICK:=PANGDVRTR002 - MANGDVRTR002;
+DVRTR002K: KICKER,L=0,VKICK:=tkon*(PANGDVRTR002 - MANGDVRTR002);
 !value, dvrtr002k->vkick*20;
 !value, dvrtr002->angle*20;
 !stop;
@@ -111,12 +114,12 @@ DVRTR002K: KICKER,L=0,VKICK:=PANGDVRTR002 - MANGDVRTR002;
 !   \alpha = 0.62832 (36°), L nom = 1, I nom=95.34
 ! \alpha [rad], L [m]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDHYTT001 := 1.*1/80;
+LDHYTT001 := 1.*1/1;
 MANGDHYTT001 := -1*LDHYTT001*clight/(1e9*en)*(3.8349e-3 + 1.1171e-2*abs(DHYTT001));
-PANGDHYTT001 := -0.62832*1/80; !physical angle
-DHYTT001 : SBEND,L:=LDHYTT001,ANGLE:=MANGDHYTT001,E1=-.6283185308;!magnetic angle
+PANGDHYTT001 := -0.62832*1/1; !physical angle
+DHYTT001 : SBEND,L:=LDHYTT001,ANGLE:=hdon*MANGDHYTT001,E1=-.6283185308;!magnetic angle
 ! fake kicker to match the physical angle in the TL
-DHYTT001K: KICKER,L=0,hKICK:=PANGDHYTT001 - MANGDHYTT001;
+DHYTT001K: KICKER,L=0,hKICK:=tkon*(PANGDHYTT001 - MANGDHYTT001);
 !value, DHYTT001k->hkick*80;
 !value, DHYTT001->angle*80;
 !stop;
@@ -136,15 +139,15 @@ VBP: SBEND,L=.35,TILT:= pi/2,ANGLE=.191986,E1=0.095993,E2=0.095993;
 !   \alpha = 0.7854 (45°), L nom = 1.113, I nom=570.81
 ! \alpha [rad], L [m], I [A]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDHPTT001 := 1/80*1.113;
+LDHPTT001 := 1/1*1.113;
 if (abs(DHPTT001) <= 300){
   MANGDHPTT001 := LDHPTT001*clight/(1e9*en)*(1.2129e-4 + 2.419e-3*abs(DHPTT001));}
 else {
   MANGDHPTT001 := LDHPTT001*clight/(1e9*en)*(-1.3699e-13*DHPTT001^4 + 3.7969e-9*abs(DHPTT001)^3 - 7.7012e-6*(DHPTT001)^2 + 6.2805e-3*abs(DHPTT001) - 0.56665);};
-PANGDHPTT001 := 1/80*0.7854; !physical angle
-DHPTT001 : SBEND,L:=LDHPTT001,ANGLE:=MANGDHPTT001;!magnetic angle
+PANGDHPTT001 := 1/1*0.7854; !physical angle
+DHPTT001 : SBEND,L:=LDHPTT001,ANGLE:=hdon*MANGDHPTT001;!magnetic angle
 ! fake kicker to match the physical angle in the TL
-DHPTT001K: KICKER,L=0,hKICK:=PANGDHPTT001 - MANGDHPTT001;
+DHPTT001K: KICKER,L=0,hKICK:=tkon*(PANGDHPTT001 - MANGDHPTT001);
 !value, DHPTT001k->hkick*80;
 !value, DHPTT001->angle*80;
 !stop;!
@@ -157,15 +160,15 @@ DHPTT001K: KICKER,L=0,hKICK:=PANGDHPTT001 - MANGDHPTT001;
 !   \alpha = 0.7854 (45°), L nom = 1.113, I nom=570.81
 ! \alpha [rad], L [m], I [A]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDHPTT002 := 1/80*1.113;
+LDHPTT002 := 1/1*1.113;
 if (abs(DHPTT002) <= 300){
   MANGDHPTT002 := -1*LDHPTT002*clight/(1e9*en)*(1.2129e-4 + 2.419e-3*abs(DHPTT002));}
 else {
   MANGDHPTT002 := -1*LDHPTT002*clight/(1e9*en)*(-1.3699e-13*DHPTT002^4 + 3.7969e-9*abs(DHPTT002)^3 - 7.7012e-6*(DHPTT002)^2 + 6.2805e-3*abs(DHPTT002) - 0.56665);};
-PANGDHPTT002 := -0.7854*1/80; !physical angle
-DHPTT002 : SBEND,L:=LDHPTT002,ANGLE:=MANGDHPTT002;!magnetic angle
+PANGDHPTT002 := -0.7854*1/1; !physical angle
+DHPTT002 : SBEND,L:=LDHPTT002,ANGLE:=hdon*MANGDHPTT002;!magnetic angle
 ! fake kicker to match the physical angle in the TL
-DHPTT002K: KICKER,L=0,hKICK:=PANGDHPTT002 - MANGDHPTT002;
+DHPTT002K: KICKER,L=0,hKICK:=tkon*(PANGDHPTT002 - MANGDHPTT002);
 !value, DHPTT002k->hkick*80;
 !value, DHPTT002->angle*80;
 !stop;!
@@ -175,9 +178,21 @@ DHPTT002K: KICKER,L=0,hKICK:=PANGDHPTT002 - MANGDHPTT002;
 ! DHRTT001: SBEND,L=0.757,ANGLE=-0.52359878,E1=-0.261799388,
 !            E2=-0.261799388;
 ! orblancog. 2016.10 
-! Tech.note. I-8, pag.~17
-DHRTT001: SBEND,L=0.757,ANGLE=-0.5236,E1=-0.2618,
-            E2=-0.2618;
+! Tech.note. DI-10 pag.~28, I-10 pag.~10
+! I nom=233[A], 1.18[T], 30°(0.524 [rad])
+! \alpha [rad], L [m], I [A]
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LDHRTT001 := 1/1*0.757;
+MANGDHRTT001 := -1*LDHRTT001*clight/(1e9*en)*(1.18/233*abs(DHRTT001));
+PANGDHRTT001 := -0.5326*1/1; !physical angle
+DHRTT001 : SBEND,L:=LDHRTT001,ANGLE:=hdon*MANGDHRTT001,E1=-0.261799388,E2=-0.261799388;!magnetic angle
+! fake kicker to match the physical angle in the TL
+DHRTT001K: KICKER,L=0,hKICK:=tkon*(PANGDHRTT001 - MANGDHRTT001);
+!value, DHRTT001k->hkick;
+!value, DHRTT001->angle;
+!stop;!
+
+
 
 !DHSTT001: SBEND,L = 1.113, ANGLE = -0.785398163;
 ! orblancog. 2016.10 Length and angle matches DHPTT001
@@ -186,15 +201,15 @@ DHRTT001: SBEND,L=0.757,ANGLE=-0.5236,E1=-0.2618,
 !   \alpha = 0.7854 (45°), L nom = 1.113, I nom=570.81
 ! \alpha [rad], L [m], I [A]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDHSTT001 := 1/80*1.113;
+LDHSTT001 := 1/1*1.113;
 if (abs(DHSTT001) <= 300){
   MANGDHSTT001 := -1*LDHSTT001*clight/(1e9*en)*(1.2129e-4 + 2.419e-3*abs(DHSTT001));}
 else {
   MANGDHSTT001 := -1*LDHSTT001*clight/(1e9*en)*(-1.3699e-13*DHSTT001^4 + 3.7969e-9*abs(DHSTT001)^3 - 7.7012e-6*(DHSTT001)^2 + 6.2805e-3*abs(DHSTT001) - 0.56665);};
-PANGDHSTT001 := -1*1/80*0.7854; !physical angle
-DHSTT001 : SBEND,L:=LDHSTT001,ANGLE:=MANGDHSTT001;!magnetic angle
-! fake kicker to match the physical angle in the TL ???
-DHSTT001K: KICKER,L=0,hKICK:=PANGDHSTT001 - MANGDHSTT001;
+PANGDHSTT001 := -1*1/1*0.7854; !physical angle
+DHSTT001 : SBEND,L:=LDHSTT001,ANGLE:=hdon*MANGDHSTT001;!magnetic angle
+! fake kicker to match the physical angle in the TL 
+DHSTT001K: KICKER,L=0,hKICK:=tkon*(PANGDHSTT001 - MANGDHSTT001);
 !value, DHSTT001k->hkick*80;
 !value, DHSTT001->angle*80;
 !stop;
@@ -206,15 +221,15 @@ DHSTT001K: KICKER,L=0,hKICK:=PANGDHSTT001 - MANGDHSTT001;
 !   \alpha = 0.192 (11°), L nom = 0.35, I nom = 100.19
 ! \alpha [rad], L [m], I [A]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDVRTT001 := 1/20*0.35;
+LDVRTT001 := 1/1*0.35;
 if (abs(DVRTT001) <= 60){
 MANGDVRTT001 := LDVRTT001*clight/(1e9*en)*(1.0514e-3 + 1.1010e-2*abs(DVRTT001));}
 else{MANGDVRTT001 := LDVRTT001*clight/(1e9*en)*(-1.7718e-10*DVRTT001^4 + 9.0349e-7*abs(DVRTT001)^3 - 2.8357e-4*DVRTT001^2 + 3.4797e-2*abs(DVRTT001) - 0.59817);
 };
-PANGDVRTT001 := 1/20*0.192; !physical angle
-DVRTT001 : SBEND,L:=LDVRTT001,TILT:=TWOPI/4,ANGLE:=MANGDVRTT001,E1=0.095993,E2=0.095993;!magnetic angle
+PANGDVRTT001 := 1/1*0.192; !physical angle
+DVRTT001 : SBEND,L:=LDVRTT001,TILT:=TWOPI/4,ANGLE:=vdon*MANGDVRTT001,E1=0.095993,E2=0.095993;!magnetic angle
 ! fake kicker to match the physical angle in the TL
-DVRTT001K: KICKER,L=0,VKICK:=PANGDVRTT001 - MANGDVRTT001;
+DVRTT001K: KICKER,L=0,VKICK:=tkon*(PANGDVRTT001 - MANGDVRTT001);
 !value, dvrtt001k->vkick*20;
 !value, dvrtt001->angle*20;
 !stop;
@@ -226,15 +241,15 @@ DVRTT001K: KICKER,L=0,VKICK:=PANGDVRTT001 - MANGDVRTT001;
 !   \alpha = 0.192 (11°), L nom = 0.35, I nom = 100.19
 ! \alpha [rad], L [m], I [A]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDVRTT002 := 1/20*0.35;
+LDVRTT002 := 1/1*0.35;
 if (abs(DVRTT002) <= 60){
 MANGDVRTT002 := -1*LDVRTT002*clight/(1e9*en)*(1.0514e-3 + 1.1010e-2*abs(DVRTT002));}
 else{MANGDVRTT002 := -1*LDVRTT002*clight/(1e9*en)*(-1.7718e-10*DVRTT002^4 + 9.0349e-7*abs(DVRTT002)^3 - 2.8357e-4*DVRTT002^2 + 3.4797e-2*abs(DVRTT002) - 0.59817);
 };
-PANGDVRTT002 := -1*1/20*0.192; !physical angle
-DVRTT002 : SBEND,L:=LDVRTT002,TILT:=TWOPI/4,ANGLE:=MANGDVRTT002,E1=0.095993,E2=0.095993;!magnetic angle
+PANGDVRTT002 := -1*1/1*0.192; !physical angle
+DVRTT002 : SBEND,L:=LDVRTT002,TILT:=TWOPI/4,ANGLE:=vdon*MANGDVRTT002,E1=0.095993,E2=0.095993;!magnetic angle
 ! fake kicker to match the physical angle in the TL
-DVRTT002K: KICKER,L=0,VKICK:=PANGDVRTT002 - MANGDVRTT002;
+DVRTT002K: KICKER,L=0,VKICK:=tkon*(PANGDVRTT002 - MANGDVRTT002);
 !value, dvrtt002k->vkick*20;
 !value, dvrtt002->angle*20;
 !stop;
@@ -247,15 +262,15 @@ DVRTT002K: KICKER,L=0,VKICK:=PANGDVRTT002 - MANGDVRTT002;
 !   \alpha = 0.192 (11°), L nom = 0.35, I nom = 100.19
 ! \alpha [rad], L [m], I [A]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDVRTE001 := 1/20*0.35;
+LDVRTE001 := 1/1*0.35;
 if (abs(DVRTE001) <= 60){
 MANGDVRTE001 := LDVRTE001*clight/(1e9*en)*(1.0514e-3 + 1.1010e-2*abs(DVRTE001));}
 else{MANGDVRTE001 := LDVRTE001*clight/(1e9*en)*(-1.7718e-10*DVRTE001^4 + 9.0349e-7*abs(DVRTE001)^3 - 2.8357e-4*DVRTE001^2 + 3.4797e-2*abs(DVRTE001) - 0.59817);
 };
-PANGDVRTE001 := 1/20*0.192; !physical angle
-DVRTE001 : SBEND,L:=LDVRTE001,TILT:=TWOPI/4,ANGLE:=MANGDVRTE001,E1=0.095993,E2=0.095993;!magnetic angle
+PANGDVRTE001 := 1/1*0.192; !physical angle
+DVRTE001 : SBEND,L:=LDVRTE001,TILT:=TWOPI/4,ANGLE:=vdon*MANGDVRTE001,E1=0.095993,E2=0.095993;!magnetic angle
 ! fake kicker to match the physical angle in the TL
-DVRTE001K: KICKER,L=0,VKICK:=PANGDVRTE001 - MANGDVRTE001;
+DVRTE001K: KICKER,L=0,VKICK:=tkon*(PANGDVRTE001 - MANGDVRTE001);
 !value, dvrte001k->vkick*20;
 !value, dvrte001->angle*20;
 !stop;
@@ -267,31 +282,147 @@ DVRTE001K: KICKER,L=0,VKICK:=PANGDVRTE001 - MANGDVRTE001;
 !   \alpha = 0.192 (11°), L nom = 0.35, I nom = 100.19
 ! \alpha [rad], L [m], I [A]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDVRTE002 := 1/20*0.35;
+LDVRTE002 := 1/1*0.35;
 if (abs(DVRTE002) <= 60){
 MANGDVRTE002 := -1*LDVRTE002*clight/(1e9*en)*(1.0514e-3 + 1.1010e-2*abs(DVRTE002));}
 else{MANGDVRTE002 := -1*LDVRTE002*clight/(1e9*en)*(-1.7718e-10*DVRTE002^4 + 9.0349e-7*abs(DVRTE002)^3 - 2.8357e-4*DVRTE002^2 + 3.4797e-2*abs(DVRTE002) - 0.59817);
 };
-PANGDVRTE002 := -1*1/20*0.192; !physical angle
-DVRTE002 : SBEND,L:=LDVRTE002,TILT:=TWOPI/4,ANGLE:=MANGDVRTE002,E1=0.095993,E2=0.095993;!magnetic angle
+PANGDVRTE002 := -1*1/1*0.192; !physical angle
+DVRTE002 : SBEND,L:=LDVRTE002,TILT:=TWOPI/4,ANGLE:=vdon*MANGDVRTE002,E1=0.095993,E2=0.095993;!magnetic angle
 ! fake kicker to match the physical angle in the TL
-DVRTE002K: KICKER,L=0,VKICK:=PANGDVRTE002 - MANGDVRTE002;
+DVRTE002K: KICKER,L=0,VKICK:=tkon*(PANGDVRTE002 - MANGDVRTE002);
 !value, dvrte002k->vkick*20;
 !value, dvrte002->angle*20;
 !stop;
 
- DHRTE001: SBEND,L=0.757,ANGLE=.528679953,E1=.26433976,E2=.26433976;
+!DHRTE001: SBEND,L=0.757,ANGLE=.528679953,E1=.26433976,E2=.26433976;
+! orblancog. 2016.10 
+! DAFNE Tech. Note : DI-10 pag.~25, I-10 pag.~10., I-16 pag.~15
+! DHRTE001 1.18[T] 30° (0.524 [rad])
+! I nom=233[A]
+! \alpha [rad], L [m], I [A]
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LDHRTE001 := 1/1*0.757;
+MANGDHRTE001 := LDHRTE001*clight/(1e9*en)*(1.18/233*abs(DHRTE001));
+PANGDHRTE001 := 0.5326*1/1; !physical angle
+DHRTE001 : SBEND,L:=LDHRTE001,ANGLE:=hdon*MANGDHRTE001,E1=.26433976,E2=.26433976;!magnetic angle
+! fake kicker to match the physical angle in the TL
+DHRTE001K: KICKER,L=0,hKICK:=tkon*(PANGDHRTE001 - MANGDHRTE001);
+!value, DHRTE001k->hkick;
+!value, DHRTE001->angle;
+!stop;!
 
- DHRTE002: SBEND,L=0.757,ANGLE=-.542099266,E1=-.271049633,E2=-.271049633;
+!DHRTE002: SBEND,L=0.757,ANGLE=-.542099266,E1=-.271049633,E2=-.271049633;
+! orblancog. 2016.10 
+! DAFNE Tech. Note : DI-10 pag.~25, I-10 pag.~10., I-16 pag.~15
+! DHRTE002 1.22[T] 31° (0.5411 [rad])
+! I nom=155[A]
+! \alpha [rad], L [m], I [A]
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LDHRTE002 := 1/1*0.757;
+MANGDHRTE002 := -LDHRTE002*clight/(1e9*en)*(1.22/155*abs(DHRTE002));
+PANGDHRTE002 := -1*0.5411*1/1; !physical angle
+DHRTE002 : SBEND,L:=LDHRTE002,ANGLE:=hdon*MANGDHRTE002,E1=-.271049633,E2=-.271049633;!magnetic angle
+! fake kicker to match the physical angle in the TL
+DHRTE002K: KICKER,L=0,hKICK:=tkon*(PANGDHRTE002 - MANGDHRTE002);
+!value, DHRTE002k->hkick;
+!value, DHRTE002->angle;
+!stop;!
 
- DHRTE003: SBEND,L=0.757,ANGLE=-.542099266,E1=-.271049633,E2=-.271049633;
 
- DVRTE003: SBEND,L=.35,TILT := pi/2,ANGLE=-.191986,E1=-0.095993,E2=-0.095993;
+!DHRTE003: SBEND,L=0.757,ANGLE=-.542099266,E1=-.271049633,E2=-.271049633;
+! orblancog. 2016.10 
+! DAFNE Tech. Note : DI-10 pag.~25, I-10 pag.~10., I-16 pag.~15
+! DHRTE003 1.22[T] 31° (0.5411 [rad])
+! I nom=155[A]
+! \alpha [rad], L [m], I [A]
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LDHRTE003 := 1/1*0.757;
+MANGDHRTE003 := -LDHRTE003*clight/(1e9*en)*(1.22/155*abs(DHRTE003));
+PANGDHRTE003 := -1*0.5411*1/1; !physical angle
+DHRTE003 : SBEND,L:=LDHRTE003,ANGLE:=hdon*MANGDHRTE003,E1=-.271049633,E2=-.271049633;!magnetic angle
+! fake kicker to match the physical angle in the TL
+DHRTE003K: KICKER,L=0,hKICK:=tkon*(PANGDHRTE003 - MANGDHRTE003);
+!value, DHRTE003k->hkick;
+!value, DHRTE003->angle;
+!stop;!
 
- DVRTE004: SBEND,L=.35,TILT := pi/2,ANGLE=.191986,E1=0.095993,E2=0.095993;
 
- SPTEL101: SBEND, L = 1.233, ANGLE = -0.593411946;
- SPTEL102: SBEND, L = 0.623, ANGLE = -0.034906585;
+!DVRTE003: SBEND,L=.35,TILT := pi/2,ANGLE=-.191986,E1=-0.095993,E2=-0.095993;
+! orblancog. 2016.10
+! DAFNE Technical Note : C-17 pag.~6
+!   Dipoles DVRTR001
+!   \alpha = 0.192 (11°), L nom = 0.35, I nom = 100.19
+! \alpha [rad], L [m], I [A]
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LDVRTE003 := 1/1*0.35;
+if (abs(DVRTE003) <= 60){
+MANGDVRTE003 := -1*LDVRTE003*clight/(1e9*en)*(1.0514e-3 + 1.1010e-2*abs(DVRTE003));}
+else{MANGDVRTE003 := -1*LDVRTE003*clight/(1e9*en)*(-1.7718e-10*DVRTE003^4 + 9.0349e-7*abs(DVRTE003)^3 - 2.8357e-4*DVRTE003^2 + 3.4797e-2*abs(DVRTE003) - 0.59817);
+};
+PANGDVRTE003 := -1*1/1*0.192; !physical angle
+DVRTE003 : SBEND,L:=LDVRTE003,TILT:=TWOPI/4,ANGLE:=vdon*MANGDVRTE003,E1=0.095993,E2=0.095993;!magnetic angle
+! fake kicker to match the physical angle in the TL
+DVRTE003K: KICKER,L=0,VKICK:=tkon*(PANGDVRTE003 - MANGDVRTE003);
+!value, dvrte003k->vkick*20;
+!value, dvrte003->angle*20;
+!stop;
+
+!DVRTE004: SBEND,L=.35,TILT := pi/2,ANGLE=.191986,E1=0.095993,E2=0.095993;
+! orblancog. 2016.10
+! DAFNE Technical Note : C-17 pag.~6
+!   Dipoles DVRTR001
+!   \alpha = 0.192 (11°), L nom = 0.35, I nom = 100.19
+! \alpha [rad], L [m], I [A]
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LDVRTE004 := 1/1*0.35;
+if (abs(DVRTE004) <= 60){
+MANGDVRTE004 := LDVRTE004*clight/(1e9*en)*(1.0514e-3 + 1.1010e-2*abs(DVRTE004));}
+else{MANGDVRTE004 := LDVRTE004*clight/(1e9*en)*(-1.7718e-10*DVRTE004^4 + 9.0349e-7*abs(DVRTE004)^3 - 2.8357e-4*DVRTE004^2 + 3.4797e-2*abs(DVRTE004) - 0.59817);
+};
+PANGDVRTE004 := 1/1*0.192; !physical angle
+DVRTE004 : SBEND,L:=LDVRTE004,TILT:=TWOPI/4,ANGLE:=vdon*MANGDVRTE004,E1=0.095993,E2=0.095993;!magnetic angle
+! fake kicker to match the physical angle in the TL
+DVRTE004K: KICKER,L=0,VKICK:=tkon*(PANGDVRTE004 - MANGDVRTE004);
+!value, dvrte004k->vkick*20;
+!value, dvrte004->angle*20;
+!stop;
+
+
+
+! SPTEL101: SBEND, L = 1.233, ANGLE = -0.593411946;
+! orblancog. 2016.10 Maybe this magnet is SPTTR001 after all ???
+! DAFNE Technical Note : C-17, pag.~5
+!   \alpha = 0.5934 (34°), L nom = 1.233, I nom=2082.1
+! \alpha [rad], L [m]
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LSPTEL101 := 1/1*1.233;
+MANGSPTEL101 := -1*LSPTEL101*clight/(1e9*en)*(3.9324e-4*abs(SPTEL101)); !magnetic angle
+PANGSPTEL101 := -1*1/1*0.5934; !physical angle
+SPTEL101 : SBEND,L:=LSPTEL101,ANGLE:=hdon*MANGSPTEL101;
+! fake kicker to match the physical angle in the TL
+SPTEL101K: KICKER,L=0,HKICK:=tkon*(PANGSPTEL101 - MANGSPTEL101);
+!value, sptel101k->hkick*60;
+!value, sptel101->angle*60;
+!stop;
+
+
+!SPTEL102: SBEND, L = 0.623, ANGLE = -0.034906585;
+! DAFNE Technical Note : C-17 pag.~6, MM-7 pag.~2
+!   Dipoles SPTA1001, SPTA2001
+!   \alpha = 0.038 (2.177°), L nom = 0.623, I nom=1811.2
+! \alpha [rad], L [m]
+! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
+LSPTEL102 := 1/1*0.623;
+MANGSPTEL102 := -1*LSPTEL102*clight/(1e9*en)*1e-4*(0.565*SPTEL102-2.9); !magnetic angle
+PANGSPTEL102 := -1*1/1*34.93e-3;!physical angle, tech.note.I-7, pag~13. ???  i thought it was 0.038
+SPTEL102 : SBEND,L:=LSPTEL102,ANGLE:=hdon*MANGSPTEL102;
+ ! fake kicker to match the physical angle in the TL
+SPTEL102K: KICKER,L=0,HKICK:=tkon*(PANGSPTEL102 - MANGSPTEL102);
+!value, sptel102k->hkick*4;
+!value, sptel102->angle*4;
+!stop;
+
 
 DHSTB001: sbend,l=1.353,angle=0.0;    !bend to ...???
 

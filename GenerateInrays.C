@@ -218,10 +218,10 @@ int GenerateInrays (const char * k, int N) {
       
     if (xgausvalue<gauslimit && ygausvalue<gauslimit && tgausvalue<gauslimit){
       i++;
-      ux = xbeta + etax*upd-200e-3;
-      upx = pxbeta + etapx*upd;
-      uy = ybeta + etay*upd-00e-3;
-      upy = pybeta + etapy*upd;
+      ux = xbeta + etax*upd-00e-3;
+      upx = pxbeta + etapx*upd-0e-3;
+      uy = ybeta + etay*upd-000e-3;
+      upy = pybeta + etapy*upd+0e-3;
       if (debug) mydebug <<ux<<'\t'<<upx<<'\t'<<uy<<'\t'<<upy<<"\t"<<ups<<"\t"<<upd<<endl ;
       if (madxtrac) mymadxtrac << "start, x="<<ux<<",px="<<upx<<",y="<<uy<<",py="<<upy<<",t="<<ups<<",pt="<<upd<<";\n";
     }

@@ -30,8 +30,8 @@
 ! b               = -0.0110217       +/- 0.01787      (162.1%)
 ! K1 = 0.0311115*clight*I/(0.3*1e9*E) + 0.01*clight*I/(0.3*1e9*E)
 ! K1 [m^-2], E [GeV]. I [A]
- c1ss = 3.109e-2;//
- c2ss = 1e-2;//
+c1ss = 3.109e-2;//
+c2ss = 1e-2;//
 
 ! DAFNE Technical Note : C-17, 
 ! Transfer Line Quadrupoles (Type A), pag.~7
@@ -160,6 +160,8 @@
  kte09 :=  ((cte009+dte009)/(ABS(cte009+dte009)))*(c1s*(abs(cte009)+dte009)+c2s)/en*perte;
  kte104:=((cte104+dte104)/(ABS(cte104+dte104)))*(c1ss*(abs(cte104)+dte104)+c2ss)/en*perte;
  kte105:=((cte105+dte105)/(ABS(cte105+dte105)))*(c1ss*(abs(cte105)+dte105)+c2ss)/en*perte;
+!value,kte104,kte105,kte05;
+!stop;
 
  ktp01 :=  (ctp001/(ABS(ctp001)))*(c1s*(abs(ctp001)+dtp001)+c2s)/en*pertp;
  ktp02 :=  (ctp002/(ABS(ctp002)))*(c1s*(abs(ctp002)+dtp002)+c2s)/en*pertp;

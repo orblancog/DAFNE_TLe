@@ -16,6 +16,7 @@
  dyacc   = 0.05440481193;
 ! forward twiss
 !use, sequence= e_ae;
+
 select, flag=twiss,clear;
 envx := 3.0*sqrt(emitx_ae*table(twiss,betx)+(table(twiss,dx)*delp_ae)*(table(twiss,dx)*delp_ae));
 envy := 3.0*sqrt(emity_ae*table(twiss,bety)+(table(twiss,dy)*delp_ae)*(table(twiss,dy)*delp_ae));
@@ -23,8 +24,9 @@ select, flag=twiss, column=NAME, KEYWORD, S, L, BETX, BETY, ALFX, ALFY,
 MUX, MUY, DX, DPX, DY, DPY, ANGLE,K1L, K2L, K3L, K4L, envx, envy,k0l,ddx,ddy;
 !name,s,betx,bety,dx,dy,envx,envy, alfx,alfy,mux,RE56,
 !angle,k1l,l;
-twiss,chrom,rmatrix,sequence=e_AE,BETX=betxacc,BETY=betyacc,
-  ALFX=alfxacc,ALFY=alfyacc,dx = dxacc, dy = dyacc,file="tle_ae.tls",save;
+coguess, tolerance=1e10;
+twiss,deltap=0,sequence=e_AE,BETX=betxacc,BETY=betyacc,
+  ALFX=alfxacc,ALFY=alfyacc,dx = dxacc, dy = dyacc,file="tle_ae.tls",tolerance=1e10;
 			  
 return;
 //save, sequence= e_ae, file='e_ae_seq';

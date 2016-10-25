@@ -17,7 +17,8 @@ CALL, FILE="bend_e_Ae.d";
 CALL, FILE="lattice.d";
 use, sequence= e_ae, range=#s/#e;
 save,sequence= e_ae, file="temp.seq";
-use, sequence= e_ae, range=#s/FL1TT001;
+!call,file="temp.seq";
+use, sequence= e_ae, range=#s/#e;
 //CALL,FILE="rematch7_2l.cmd";
 //CALL,FILE="rematch_quate.cmd";
 ! savebeta in flags...
@@ -27,10 +28,10 @@ CALL,FILE="twiss_e_ae.cmd";
 !stop;
 ! store twiss params in files
 call, file="showbeta.madx";
-stop;
+!stop;
 
 ! ! Generating particles(flagname,Nparticles)
-system, 'root -l -x -q "GenerateInrays.C(\"START\",1e4)"';
+system, 'root -l -x -q "GenerateInrays.C(\"START\",1e1)"';
 !stop;
 
 ! NO purpose tracking in MAD-X
@@ -83,13 +84,13 @@ survey,file="survey";
 !!! End MAD-X Code
 
 
-!system, "rm -r madx.ps";
-!plot, colour=100,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy;
-!plot, colour=100,haxis=s,hmin=0,hmax=40,vaxis1=betx,bety,vaxis2=dx,dy;
-!plot, colour=100,haxis=s,hmin=40,hmax=80,vaxis1=betx,bety,vaxis2=dx,dy;
-!plot, colour=100,haxis=s,hmin=80,hmax=100,vmin=0,-50,vmax=5000,50, vaxis1=betx,bety,vaxis2=dx,dy;
-!system, "ps2pdf madx.ps";
-!survey,file="survey";
+system, "rm -r madx.ps";
+plot, colour=100,haxis=s,vaxis1=betx,bety,vaxis2=dx,dy;
+plot, colour=100,haxis=s,hmin=0,hmax=40,vaxis1=betx,bety,vaxis2=dx,dy;
+plot, colour=100,haxis=s,hmin=40,hmax=80,vaxis1=betx,bety,vaxis2=dx,dy;
+plot, colour=100,haxis=s,hmin=80,hmax=100,vmin=0,-50,vmax=5000,50, vaxis1=betx,bety,vaxis2=dx,dy;
+system, "ps2pdf madx.ps";
+survey,file="survey";
 !value,CHVTE003->hkick,CHVTE003->vkick;
 !value,CHVTE003->vkick;
 !value,CHVTE004->hkick;
