@@ -381,7 +381,7 @@ DHRTE003yr: yrotation,angle:=tkon*(PANGDHRTE003 - MANGDHRTE003);
 !value, DHRTE003k->hkick;
 value, DHRTE003->angle;
 value, DHRTE003yr->angle/DHRTE003->angle;
-!stop;!
+stop;!
 
 
 !DVRTE003: SBEND,L=.35,TILT := pi/2,ANGLE=-.191986,E1=-0.095993,E2=-0.095993;
