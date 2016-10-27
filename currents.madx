@@ -1,4 +1,4 @@
-! original : eTLe_20161018_2108_pom18Quaterexcellent.dat
+! original : eTLe_20161018_1324_dopo_pranzo.dat
 ! CVVTM001 := -0.007;
 ! CHHTM001 := -0.001;
 ! CVVTM002 := -0.016;
@@ -109,8 +109,8 @@ CTE003 := -24.000;
 CTE004 := 40.000;
 CTE104 := -40.000;
 CTE105 := 7.000;
-CTE005 := -23.000;
-CTE006 := 32.000;
+CTE005 := -19.000;
+CTE006 := 28.000;
 CTE007 := -50.000;
 CTE008 := 61.800;
 CTE009 := 29.000;! flag=R

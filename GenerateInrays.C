@@ -107,7 +107,8 @@ int GenerateInrays (const char * k, int N) {
   if (beta0in == 0) {
     // if we cannot open the file, 
     // print an error message and return immediatly
-   printf("Error: cannot open betaXXXX.txt!\n");
+    cout << "Error: cannot open "<<betafl->Data()<<" !"<<endl;
+    //   printf("Error: cannot open betaXXXX.txt!\n");
     return 1;
   }
   cout << "  ... reading file "<<betafl->Data()<<" (twiss params at input)"<<endl;
@@ -218,7 +219,7 @@ int GenerateInrays (const char * k, int N) {
       
     if (xgausvalue<gauslimit && ygausvalue<gauslimit && tgausvalue<gauslimit){
       i++;
-      ux = xbeta + etax*upd-00e-3;
+      ux = xbeta + etax*upd+10e-3;
       upx = pxbeta + etapx*upd-0e-3;
       uy = ybeta + etay*upd-000e-3;
       upy = pybeta + etapy*upd+0e-3;

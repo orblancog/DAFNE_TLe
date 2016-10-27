@@ -1,5 +1,5 @@
 ! Beam params, data from accumulator
-En    := 0.51;![GeV]
+En    := 1.019/2;![GeV]
 emitx := 2.8e-7;![m]
 emity := 1.4e-7;![m]
 esprd := 0.1e-2;![1]

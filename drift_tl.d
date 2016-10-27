@@ -87,7 +87,8 @@
  D25A:DRIFT ,L=1.418;
  D25B:DRIFT ,L=2.007-1.418;
  D26A:DRIFT ,L=2.14;              !close to QUATT011
- D26B:DRIFT ,L= 1.237;  ! Catia 3.696-2.14
+! CHVT Tech.Note C-17 pag..~8. Lmag=0.2242
+ D26B:DRIFT ,L=1.237+0.2242;! orblancog 2016.10 ! oldvalue=1.237; Catia 3.696-2.14
  d26a1:drift,l=1.995;   ! Catia1.3
  d26a2:drift,l= .264;   ! Catia  2.14-1.3 -0.2
 

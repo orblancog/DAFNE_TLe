@@ -92,7 +92,8 @@ int DrawProfile (const char * k, const char * invaxis = NULL) {//k is the flag n
   if (beta0in == 0) {
     // if we cannot open the file, 
     // print an error message and return immediatly
-    printf("Error: cannot open betaXXXX.txt!\n");
+    cout << "Error: cannot open "<<betafl->Data()<<" !"<<endl;
+    //    printf("Error: cannot open betaXXXX.txt!\n");
     return 1;
   }
   cout << "  ... reading file "<<betafl->Data()<<" (twiss params at input)"<<endl;
