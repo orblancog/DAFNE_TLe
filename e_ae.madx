@@ -16,9 +16,9 @@ CALL, FILE="quad_tl.d";
 CALL, FILE="bend_e_Ae.d";
 CALL, FILE="lattice.d";
 use, sequence= e_ae, range=#s/#e;
-save,sequence= e_ae, file="temp.seq", refer=exit;
+save,sequence= e_ae, file="temp.seq";
 !call,file="temp.seq";
-use, sequence= e_ae, range=#s/#e;
+use, sequence= e_ae, range=#s/fl2tt001;
 !value,dvrtr001->s;
 !stop;
 //CALL,FILE="rematch7_2l.cmd";
@@ -101,9 +101,9 @@ survey,file="survey";
 !value,QUATE104->k1,QUATE104->L;
 !value,QUATE105->k1,QUATE105->L;
 !value,table(twiss,FL2TR001,s);
-value,table(twiss,QUATE005,s);
-value,table(twiss,QUATE006,s);
-stop;
+!value,table(twiss,QUATE005,s);
+!value,table(twiss,QUATE006,s);
+!stop;
 
 ! !! touschek
 ! touschek, file="outputs/myMRe.tou", tolerance=1e-7;

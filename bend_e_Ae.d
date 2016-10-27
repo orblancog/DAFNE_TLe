@@ -58,7 +58,7 @@ value, spta2001yr->angle/spta2001->angle;
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
 LSPTA2002 := 1/1*1.233;
 MANGSPTA2002 := LSPTA2002*clight/(1e9*en)*(3.9324e-4*abs(SPTA2002)); !magnetic angle
-PANGSPTA2002 := 1/1*0.5934; !physical angle
+PANGSPTA2002 := 1/1*1;!38°!0.5934; !physical angle
 SPTA2002 : SBEND,L:=LSPTA2002,ANGLE:=hdon*MANGSPTA2002;
 ! fake kicker to match the physical angle in the TL
 !SPTA2002K: KICKER,L=0,HKICK:=tkon*(PANGSPTA2002 - MANGSPTA2002);
@@ -351,10 +351,10 @@ value, DHRTE001yr->angle/DHRTE001->angle;
 ! I nom=155[A]
 ! \alpha [rad], L [m], I [A]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDHRTE002 := 1/1*0.757;
+LDHRTE002 := 0.1*1/1*0.757;
 MANGDHRTE002 := -LDHRTE002*clight/(1e9*en)*(1.22/155*abs(DHRTE002));
 PANGDHRTE002 := -1*0.5411*1/1; !physical angle
-DHRTE002 : SBEND,L:=LDHRTE002,ANGLE:=hdon*MANGDHRTE002,E1=-.271049633,E2=-.271049633;!magnetic angle
+DHRTE002 : SBEND,L:=LDHRTE002,ANGLE:=0*hdon*MANGDHRTE002,E1=-.271049633,E2=-.271049633;!magnetic angle
 ! fake kicker to match the physical angle in the TL
 !DHRTE002K: KICKER,L=0,hKICK:=tkon*(PANGDHRTE002 - MANGDHRTE002);
 DHRTE002yr: yrotation,angle:=tkon*(PANGDHRTE002 - MANGDHRTE002);
@@ -371,17 +371,17 @@ value, DHRTE002yr->angle/DHRTE002->angle;
 ! I nom=155[A]
 ! \alpha [rad], L [m], I [A]
 ! kickangle = Length*clight/(1e9*Energy[GeV]) * B[T](I[A])
-LDHRTE003 := 1/1*0.757;
+LDHRTE003 := 0.1*1/1*0.757;
 MANGDHRTE003 := -LDHRTE003*clight/(1e9*en)*(1.22/155*abs(DHRTE003));
 PANGDHRTE003 := -1*0.5411*1/1; !physical angle
-DHRTE003 : SBEND,L:=LDHRTE003,ANGLE:=hdon*MANGDHRTE003,E1=-.271049633,E2=-.271049633;!magnetic angle
+DHRTE003 : SBEND,L:=LDHRTE003,ANGLE:=0*hdon*MANGDHRTE003,E1=-.271049633,E2=-.271049633;!magnetic angle
 ! fake kicker to match the physical angle in the TL
 !DHRTE003K: KICKER,L=0,hKICK:=tkon*(PANGDHRTE003 - MANGDHRTE003);
 DHRTE003yr: yrotation,angle:=tkon*(PANGDHRTE003 - MANGDHRTE003);
 !value, DHRTE003k->hkick;
 value, DHRTE003->angle;
 value, DHRTE003yr->angle/DHRTE003->angle;
-stop;!
+!stop;!
 
 
 !DVRTE003: SBEND,L=.35,TILT := pi/2,ANGLE=-.191986,E1=-0.095993,E2=-0.095993;

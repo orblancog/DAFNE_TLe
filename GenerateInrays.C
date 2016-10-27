@@ -221,7 +221,7 @@ int GenerateInrays (const char * k, int N) {
       i++;
       ux = xbeta + etax*upd+10e-3;
       upx = pxbeta + etapx*upd-0e-3;
-      uy = ybeta + etay*upd-000e-3;
+      uy = ybeta + etay*upd+05e-3;
       upy = pybeta + etapy*upd+0e-3;
       if (debug) mydebug <<ux<<'\t'<<upx<<'\t'<<uy<<'\t'<<upy<<"\t"<<ups<<"\t"<<upd<<endl ;
       if (madxtrac) mymadxtrac << "start, x="<<ux<<",px="<<upx<<",y="<<uy<<",py="<<upy<<",t="<<ups<<",pt="<<upd<<";\n";
