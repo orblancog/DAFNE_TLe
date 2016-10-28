@@ -22,7 +22,7 @@
 ! Measurements on Tesla Quadrupole Prototype for the
 !   DAFNE Accumulator and Main Rings, pag.~3
 ! Nominal working point : 8.118[T/m] @ 262.28[A]
-! Good field region : 30[mm]
+! Good field region : 300[mm]
 ! Fitting Figure~2 with engauge-digitizer+gnuplot : gives f(x)=a*x+b
 ! Final set of parameters            Asymptotic Standard Error
 ! =======================            ==========================

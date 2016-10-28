@@ -18,7 +18,7 @@ CALL, FILE="lattice.d";
 use, sequence= e_ae, range=#s/#e;
 save,sequence= e_ae, file="temp.seq";
 !call,file="temp.seq";
-use, sequence= e_ae, range=#s/fl2tt001;
+use, sequence= e_ae, range=#s/#e;
 !value,dvrtr001->s;
 !stop;
 //CALL,FILE="rematch7_2l.cmd";
@@ -33,7 +33,7 @@ call, file="showbeta.madx";
 !stop;
 
 ! ! Generating particles(flagname,Nparticles)
-system, 'root -l -x -q "GenerateInrays.C(\"START\",1e4)"';
+system, 'root -l -x -q "GenerateInrays.C(\"START\",1e1)"';
 !stop;
 
 ! NO purpose tracking in MAD-X
